@@ -36,16 +36,48 @@ const testimonials = [
   }
 ];
 
-// We use a regular array since we are no longer infinitely auto-scrolling
-const duplicatedTestimonials = [...testimonials];
+// Quadruple the array to ensure the screen is ALWAYS filled on ultra-wide monitors
+const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials];
 
 export default function Testimonials() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollPosRef = useRef(0);
+  const [isInteracting, setIsInteracting] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
+  useEffect(() => {
+    let animationFrameId: number;
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    // Initialize accumulator to current scroll
+    scrollPosRef.current = scrollContainer.scrollLeft;
+
+    const scroll = () => {
+      if (!isInteracting && !isDragging) {
+        scrollPosRef.current += 0.5; // Slow, smooth speed
+        
+        // Infinite scroll logic: snap back when we reach half the scrollable width
+        if (scrollPosRef.current >= scrollContainer.scrollWidth / 2) {
+          scrollPosRef.current = 0;
+        }
+        scrollContainer.scrollLeft = scrollPosRef.current;
+      } else {
+        // If user is interacting, keep the accumulator synced with actual scroll
+        scrollPosRef.current = scrollContainer.scrollLeft;
+      }
+      animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    animationFrameId = requestAnimationFrame(scroll);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isInteracting, isDragging]);
+
   const handleMouseDown = (e: React.MouseEvent) => {
+    setIsInteracting(true);
     setIsDragging(true);
     if (!scrollRef.current) return;
     setStartX(e.pageX - scrollRef.current.offsetLeft);
@@ -58,10 +90,12 @@ export default function Testimonials() {
     const x = e.pageX - scrollRef.current.offsetLeft;
     const walk = (x - startX) * 1.5; // Smooth drag speed
     scrollRef.current.scrollLeft = scrollLeft - walk;
+    scrollPosRef.current = scrollRef.current.scrollLeft;
   };
 
   const handleMouseUpOrLeave = () => {
     setIsDragging(false);
+    setIsInteracting(false);
   };
 
   return (
@@ -93,17 +127,20 @@ export default function Testimonials() {
         {/* Scrolling Content */}
         <div 
           ref={scrollRef}
+          onMouseEnter={() => setIsInteracting(true)}
           onMouseLeave={handleMouseUpOrLeave}
+          onTouchStart={() => setIsInteracting(true)}
+          onTouchEnd={() => setIsInteracting(false)}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUpOrLeave}
-          className={`flex overflow-x-auto whitespace-nowrap min-w-full ${isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'} [&::-webkit-scrollbar]:hidden snap-x snap-mandatory px-[10vw] gap-8`}
+          className={`flex overflow-x-auto whitespace-nowrap min-w-full ${isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'} [&::-webkit-scrollbar]:hidden`}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {duplicatedTestimonials.map((testimonial, idx) => (
             <div 
               key={idx} 
-              className="flex flex-col snap-center flex-shrink-0 w-[85vw] md:w-[450px] p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md whitespace-normal pointer-events-none"
+              className="flex flex-col flex-shrink-0 w-[350px] md:w-[450px] mx-4 p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md whitespace-normal pointer-events-none"
             >
               <div className="flex items-center space-x-4 mb-6">
                 <div className="w-16 h-16 rounded-full overflow-hidden border border-white/20 flex-shrink-0">
