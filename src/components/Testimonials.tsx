@@ -4,39 +4,40 @@ import { motion } from "framer-motion";
 
 const testimonials = [
   {
-    name: "Moses Arfo",
+    name: "Cristina Cuevas",
     role: "Founder & CEO CVSpan",
-    image: "https://framerusercontent.com/images/8j1H5iPrDN9W1hswKwaalucMjiw.jpg",
+    image: "https://framerusercontent.com/images/CLVF6XhDsXkfHcURXf0C4JByJc.png",
     text: "Tomike is a highly skilled designer with a sharp eye for detail and a talent for innovative, blue-sky thinking. His creative input has shaped winning pitches, successful product designs, and consistently delighted clients."
   },
   {
-    name: "Iany Trisuzzi",
+    name: "Moses Arfo",
     role: "Senior Creative @ Superside",
     image: "https://framerusercontent.com/images/a4SOmWUBbbQPALcSPI3MNaGmI.png",
     text: "I had the pleasure of working with Tomike on several projects, where his strong UX/UI skills, clear communication, and positive, easygoing nature made collaboration seamless. He’s adaptable, reliable, and a true asset to any team."
   },
   {
-    name: "Tobi Olowu",
+    name: "Iany Trisuzzi",
     role: "Design Manager @ CvSpan",
     image: "https://framerusercontent.com/images/xQhM0qXmKCwKe7ve87YREjHWBsA.png",
     text: "Tomike is a highly dependable designer whose attention to detail and exceptional skills consistently deliver high-quality results. His dedication makes him a truly valuable team member."
   },
   {
-    name: "Camila Awensztern",
+    name: "Tobi Olowu",
     role: "Digital Strategist & Project Manager",
     image: "https://framerusercontent.com/images/0c2EyBVUGS8HFCesIpZOX3bGIo0.png",
     text: "Tomike is a dedicated, creative professional with great team spirit. He’s collaborative, solution-oriented, and a pleasure to work with. Any team would be lucky to have him."
   },
   {
-    name: "Cristina Cuevas",
+    name: "Camila Awensztern",
     role: "Project Manager for Creative Services",
     image: "https://framerusercontent.com/images/yKkiWZrRmmWApPWBFiObKe15U.png",
     text: "I had the pleasure of working with Tomike at Superside, where his UX/UI expertise, attention to detail, and collaborative attitude stood out. He reliably led projects with care and focus, making him a valuable asset to any team."
   }
 ];
 
-// Duplicate the array to create an infinite scroll effect
-const duplicatedTestimonials = [...testimonials, ...testimonials];
+// Quadruple the array to ensure the screen is ALWAYS filled on ultra-wide monitors
+// The animation translates -50%, which perfectly loops 2 full sets
+const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials];
 
 export default function Testimonials() {
   return (
