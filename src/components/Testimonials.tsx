@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 const testimonials = [
   {
@@ -36,10 +37,35 @@ const testimonials = [
 ];
 
 // Quadruple the array to ensure the screen is ALWAYS filled on ultra-wide monitors
-// The animation translates -50%, which perfectly loops 2 full sets
+// We use a large array so the seamless jump isn't easily detectable
 const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials];
 
 export default function Testimonials() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isInteracting, setIsInteracting] = useState(false);
+
+  useEffect(() => {
+    let animationFrameId: number;
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    const scroll = () => {
+      if (!isInteracting) {
+        scrollContainer.scrollLeft += 0.5; // Slow, smooth speed
+        
+        // Infinite scroll logic: snap back when we reach half the scrollable width
+        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
+          scrollContainer.scrollLeft = 0;
+        }
+      }
+      animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    animationFrameId = requestAnimationFrame(scroll);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isInteracting]);
+
   return (
     <section className="relative py-24 bg-black overflow-hidden z-20">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-12">
@@ -67,7 +93,15 @@ export default function Testimonials() {
         <div className="absolute right-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
         {/* Scrolling Content */}
-        <div className="flex animate-marquee hover:[animation-play-state:paused] whitespace-nowrap min-w-max">
+        <div 
+          ref={scrollRef}
+          onMouseEnter={() => setIsInteracting(true)}
+          onMouseLeave={() => setIsInteracting(false)}
+          onTouchStart={() => setIsInteracting(true)}
+          onTouchEnd={() => setIsInteracting(false)}
+          className="flex overflow-x-auto whitespace-nowrap min-w-full cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
           {duplicatedTestimonials.map((testimonial, idx) => (
             <div 
               key={idx} 
