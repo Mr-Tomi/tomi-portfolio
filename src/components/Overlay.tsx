@@ -34,7 +34,7 @@ export default function Overlay({ scrollProgress }: { scrollProgress: MotionValu
         className="absolute inset-0 flex flex-col items-start justify-center text-left px-12 md:px-32"
       >
         <h2 className="text-4xl md:text-6xl font-semibold tracking-tight text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] max-w-2xl">
-          Shaping intuitive, human-centered AI experiences.
+          UX Consultant, AI Enthusiast & Founder
         </h2>
       </motion.div>
 
@@ -43,7 +43,7 @@ export default function Overlay({ scrollProgress }: { scrollProgress: MotionValu
         className="absolute inset-0 flex flex-col items-end justify-center text-right px-12 md:px-32"
       >
         <h2 className="text-4xl md:text-6xl font-semibold tracking-tight text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] max-w-2xl">
-          UX Consultant, AI Enthusiast & Founder
+          Shaping intuitive, human-centered AI experiences.
         </h2>
       </motion.div>
     </div>
