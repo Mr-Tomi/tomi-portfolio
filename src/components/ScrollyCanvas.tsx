@@ -7,11 +7,10 @@ const FRAME_COUNT = 120;
 
 export default function ScrollyCanvas({ scrollProgress }: { scrollProgress: MotionValue<number> }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const imagesRef = useRef<HTMLImageElement[]>([]);
   
   useEffect(() => {
     const loadedImages: HTMLImageElement[] = [];
-    let loadedCount = 0;
     
     for (let i = 0; i < FRAME_COUNT; i++) {
       const img = new Image();
@@ -19,24 +18,26 @@ export default function ScrollyCanvas({ scrollProgress }: { scrollProgress: Moti
       img.src = `/sequence/frame_${frameNum}_delay-0.066s.png`;
       
       img.onload = () => {
-        loadedCount++;
-        if (loadedCount === FRAME_COUNT) {
+        // Draw the very first frame immediately as soon as it loads!
+        if (i === 0) {
           drawFrame(0);
         }
       };
       
       loadedImages.push(img);
     }
-    setImages(loadedImages);
+    imagesRef.current = loadedImages;
+    // Initial draw just in case it's cached
+    drawFrame(0);
   }, []);
 
   const drawFrame = (frameIndex: number) => {
-    if (!canvasRef.current || images.length === 0) return;
+    if (!canvasRef.current || imagesRef.current.length === 0) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     
-    const img = images[frameIndex];
+    const img = imagesRef.current[frameIndex];
     if (!img || !img.complete) return;
 
     const canvasWidth = canvas.width;
@@ -77,7 +78,7 @@ export default function ScrollyCanvas({ scrollProgress }: { scrollProgress: Moti
     handleResize(); 
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [images, scrollProgress]);
+  }, [scrollProgress]);
 
   return (
     <canvas
