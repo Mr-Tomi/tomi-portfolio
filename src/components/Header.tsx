@@ -27,9 +27,9 @@ export default function Header() {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="fixed top-0 left-0 w-full z-50 py-6 px-6 md:px-12 lg:px-24 flex items-center justify-between pointer-events-none mix-blend-difference"
+      className="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12 lg:px-24 flex items-center justify-between bg-black/60 backdrop-blur-xl border-b border-white/5"
     >
-      <Link href="/" className="pointer-events-auto block">
+      <Link href="/" className="block">
         <div 
           className="h-8 w-[136px] bg-[#FF6B00]" 
           style={{
@@ -46,7 +46,7 @@ export default function Header() {
           title="Tomi Campbell Logo"
         />
       </Link>
-      <nav className="flex space-x-8 pointer-events-auto text-sm font-medium tracking-wide">
+      <nav className="flex space-x-8 text-white text-sm font-medium tracking-wide">
         <Link href="/#projects" className="hover:text-[#FF6B00] transition-colors">Projects</Link>
         <Link href="/contact" className="hover:text-[#FF6B00] transition-colors">About me & Contact</Link>
       </nav>
