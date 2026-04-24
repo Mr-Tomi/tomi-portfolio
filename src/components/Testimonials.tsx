@@ -37,26 +37,36 @@ const testimonials = [
 ];
 
 // Quadruple the array to ensure the screen is ALWAYS filled on ultra-wide monitors
-// We use a large array so the seamless jump isn't easily detectable
 const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials];
 
 export default function Testimonials() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollPosRef = useRef(0);
   const [isInteracting, setIsInteracting] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   useEffect(() => {
     let animationFrameId: number;
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
+    // Initialize accumulator to current scroll
+    scrollPosRef.current = scrollContainer.scrollLeft;
+
     const scroll = () => {
-      if (!isInteracting) {
-        scrollContainer.scrollLeft += 0.5; // Slow, smooth speed
+      if (!isInteracting && !isDragging) {
+        scrollPosRef.current += 0.5; // Slow, smooth speed
         
         // Infinite scroll logic: snap back when we reach half the scrollable width
-        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
-          scrollContainer.scrollLeft = 0;
+        if (scrollPosRef.current >= scrollContainer.scrollWidth / 2) {
+          scrollPosRef.current = 0;
         }
+        scrollContainer.scrollLeft = scrollPosRef.current;
+      } else {
+        // If user is interacting, keep the accumulator synced with actual scroll
+        scrollPosRef.current = scrollContainer.scrollLeft;
       }
       animationFrameId = requestAnimationFrame(scroll);
     };
@@ -64,7 +74,29 @@ export default function Testimonials() {
     animationFrameId = requestAnimationFrame(scroll);
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [isInteracting]);
+  }, [isInteracting, isDragging]);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsInteracting(true);
+    setIsDragging(true);
+    if (!scrollRef.current) return;
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5; // Smooth drag speed
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+    scrollPosRef.current = scrollRef.current.scrollLeft;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    setIsDragging(false);
+    setIsInteracting(false);
+  };
 
   return (
     <section className="relative py-24 bg-black overflow-hidden z-20">
@@ -96,16 +128,19 @@ export default function Testimonials() {
         <div 
           ref={scrollRef}
           onMouseEnter={() => setIsInteracting(true)}
-          onMouseLeave={() => setIsInteracting(false)}
+          onMouseLeave={handleMouseUpOrLeave}
           onTouchStart={() => setIsInteracting(true)}
           onTouchEnd={() => setIsInteracting(false)}
-          className="flex overflow-x-auto whitespace-nowrap min-w-full cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUpOrLeave}
+          className={`flex overflow-x-auto whitespace-nowrap min-w-full ${isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'} [&::-webkit-scrollbar]:hidden`}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {duplicatedTestimonials.map((testimonial, idx) => (
             <div 
               key={idx} 
-              className="flex flex-col flex-shrink-0 w-[350px] md:w-[450px] mx-4 p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md whitespace-normal"
+              className="flex flex-col flex-shrink-0 w-[350px] md:w-[450px] mx-4 p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md whitespace-normal pointer-events-none"
             >
               <div className="flex items-center space-x-4 mb-6">
                 <div className="w-16 h-16 rounded-full overflow-hidden border border-white/20 flex-shrink-0">
