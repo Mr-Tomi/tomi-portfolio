@@ -5,6 +5,7 @@ import { useScroll } from "framer-motion";
 import ScrollyCanvas from "@/components/ScrollyCanvas";
 import Overlay from "@/components/Overlay";
 import Projects from "@/components/Projects";
+import Testimonials from "@/components/Testimonials";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,6 +28,9 @@ export default function Home() {
 
       {/* Projects Section */}
       <Projects />
+
+      {/* Testimonials Section */}
+      <Testimonials />
     </main>
   );
 }
