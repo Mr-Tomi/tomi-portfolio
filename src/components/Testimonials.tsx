@@ -4,31 +4,31 @@ import { motion } from "framer-motion";
 
 const testimonials = [
   {
-    name: "Cristina Cuevas",
+    name: "Moses Arfo",
     role: "Founder & CEO CVSpan",
     image: "https://framerusercontent.com/images/CLVF6XhDsXkfHcURXf0C4JByJc.png",
     text: "Tomike is a highly skilled designer with a sharp eye for detail and a talent for innovative, blue-sky thinking. His creative input has shaped winning pitches, successful product designs, and consistently delighted clients."
   },
   {
-    name: "Moses Arfo",
+    name: "Iany Trisuzzi",
     role: "Senior Creative @ Superside",
     image: "https://framerusercontent.com/images/a4SOmWUBbbQPALcSPI3MNaGmI.png",
     text: "I had the pleasure of working with Tomike on several projects, where his strong UX/UI skills, clear communication, and positive, easygoing nature made collaboration seamless. He’s adaptable, reliable, and a true asset to any team."
   },
   {
-    name: "Iany Trisuzzi",
+    name: "Tobi Olowu",
     role: "Design Manager @ CvSpan",
     image: "https://framerusercontent.com/images/xQhM0qXmKCwKe7ve87YREjHWBsA.png",
     text: "Tomike is a highly dependable designer whose attention to detail and exceptional skills consistently deliver high-quality results. His dedication makes him a truly valuable team member."
   },
   {
-    name: "Tobi Olowu",
+    name: "Camila Awensztern",
     role: "Digital Strategist & Project Manager",
     image: "https://framerusercontent.com/images/0c2EyBVUGS8HFCesIpZOX3bGIo0.png",
     text: "Tomike is a dedicated, creative professional with great team spirit. He’s collaborative, solution-oriented, and a pleasure to work with. Any team would be lucky to have him."
   },
   {
-    name: "Camila Awensztern",
+    name: "Cristina Cuevas",
     role: "Project Manager for Creative Services",
     image: "https://framerusercontent.com/images/yKkiWZrRmmWApPWBFiObKe15U.png",
     text: "I had the pleasure of working with Tomike at Superside, where his UX/UI expertise, attention to detail, and collaborative attitude stood out. He reliably led projects with care and focus, making him a valuable asset to any team."
