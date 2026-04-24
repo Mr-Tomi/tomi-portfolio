@@ -27,7 +27,7 @@ export default function Header() {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="fixed top-0 left-0 w-full z-50 py-6 px-6 md:px-12 lg:px-24 flex items-center justify-between bg-black/10 backdrop-blur-md"
+      className="fixed top-0 left-0 w-full z-50 py-6 px-6 md:px-12 lg:px-24 flex items-center justify-between bg-black/5 backdrop-blur-sm"
     >
       <Link href="/" className="block">
         <div 
