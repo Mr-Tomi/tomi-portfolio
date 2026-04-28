@@ -19,7 +19,7 @@ export default function Overlay({ scrollProgress }: { scrollProgress: MotionValu
     <div className="absolute top-0 left-0 w-full h-full z-10 pointer-events-none">
       <motion.div 
         style={{ opacity: opacity1, y: y1 }}
-        className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pt-16 md:pt-24"
+        className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pt-40 md:pt-64"
       >
         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-4 text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
           Tomi Campbell
