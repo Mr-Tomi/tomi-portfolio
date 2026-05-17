@@ -26,7 +26,9 @@ export const projects: Project[] = [
       "The primary challenge was to seamlessly blend the bold, event-specific visuals and messaging with YOOBIC’s established brand identity. It was crucial to maintain consistency across their website while capturing the essence of the NRF 2025 branding.",
       "The client’s intention was to balance professionalism with creativity. By testing both options, they aimed to understand which design resonated more with their audience:",
       "The Mockup Option: Focused on showcasing YOOBIC’s innovation and solutions in a polished, corporate aesthetic.",
+      "IMG::/images/yoobic-mockup-2.png",
       "The Brush Stroke Option: Aimed to convey energy, creativity, and excitement, capturing the essence of the NRF 2025 branding.",
+      "IMG::/images/yoobic-mockup-1.png",
       "As part of the YOOBIC website update, implementing responsive design was a critical priority. The goal was to ensure that the branding updates and new features, including light/dark modes and event-specific elements, delivered a seamless user experience across desktop, and mobile devices.",
       "The final website updates achieved a perfect balance between YOOBIC’s core brand and the vibrant elements of NRF 2025. The stakeholders were not only satisfied with the outcome but genuinely excited about how the updated website amplified their event presence."
     ],
