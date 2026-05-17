@@ -69,9 +69,20 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             </h3>
           </div>
           <div className="md:col-span-8 space-y-8 text-white/70 text-lg leading-relaxed font-light">
-            {project.descriptions.map((desc, index) => (
-              <p key={index}>{desc}</p>
-            ))}
+            {project.descriptions.map((desc, index) => {
+              if (desc.startsWith("IMG::")) {
+                return (
+                  <div key={index} className="w-full rounded-2xl overflow-hidden my-8 border border-white/10">
+                    <img 
+                      src={desc.replace("IMG::", "")} 
+                      alt={`${project.title} detail`} 
+                      className="w-full h-auto object-cover" 
+                    />
+                  </div>
+                );
+              }
+              return <p key={index}>{desc}</p>;
+            })}
           </div>
         </div>
 

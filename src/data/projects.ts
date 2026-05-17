@@ -22,6 +22,7 @@ export const projects: Project[] = [
     overview: "A comprehensive website rebrand focused on streamlining the digital experience and enhancing the core brand identity.",
     descriptions: [
       "At Superside, we had the opportunity to collaborate with YOOBIC on a unique branding initiative tied to their presence at NRF 2025: Retail’s Big Show. The project involved integrating the dynamic brand elements from the event branding into YOOBIC’s existing website, ensuring a cohesive and impactful digital presence that reflected the energy and innovation of their participation in the event.",
+      "IMG::/images/yoobic-1.jpeg",
       "The primary challenge was to seamlessly blend the bold, event-specific visuals and messaging with YOOBIC’s established brand identity. It was crucial to maintain consistency across their website while capturing the essence of the NRF 2025 branding.",
       "The client’s intention was to balance professionalism with creativity. By testing both options, they aimed to understand which design resonated more with their audience:",
       "The Mockup Option: Focused on showcasing YOOBIC’s innovation and solutions in a polished, corporate aesthetic.",
