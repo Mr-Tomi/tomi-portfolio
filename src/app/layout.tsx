@@ -39,7 +39,7 @@ export default function RootLayout({
             </a>
             
             <div className="w-full flex flex-col md:flex-row justify-between items-center text-white/50 text-sm border-t border-white/10 pt-12">
-              <p>Copyright © Tomike Campbell, 2025</p>
+              <p>Copyright © Tomike Campbell, 2026</p>
               <div className="flex space-x-6 mt-6 md:mt-0">
                 <a 
                   href="https://www.linkedin.com/in/tomikecampbell/" 
