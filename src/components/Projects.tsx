@@ -18,7 +18,7 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tight leading-[0.95] mb-8"
+              className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tight leading-[1.1] mb-8"
             >
               Making Complexity<br />Look Easy
             </motion.h2>
@@ -28,7 +28,7 @@ export default function Projects() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="max-w-xs mt-12 md:mt-2 text-white/70 text-lg leading-snug font-light"
+            className="max-w-xs mt-12 md:mt-2 text-white/70 text-lg leading-relaxed font-light"
           >
             A handpicked collection of recent projects, ranging from dynamic brand refreshes to intuitive mobile apps and robust web dashboards. Built to solve complex problems through seamless, human-centered user experiences.
           </motion.div>
