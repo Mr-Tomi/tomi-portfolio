@@ -4,7 +4,8 @@ export interface Project {
   title: string;
   category: string;
   coverImage: string;
-  innerImage: string;
+  heroImage?: string;
+  innerImage?: string;
   overview: string;
   descriptions: string[];
   projectType: string;
@@ -18,7 +19,7 @@ export const projects: Project[] = [
     title: "Moore Africa",
     category: "FINTECH · MOBILE",
     coverImage: "/images/moore-thumbnail.png",
-    innerImage: "/images/moore-img-1.png",
+    heroImage: "/images/moore-img-1.png",
     overview: "Designing an all-in-one fintech app that makes money management feel simple, rewarding, and personal for young Nigerians.",
     descriptions: [
       "H2::The problem",

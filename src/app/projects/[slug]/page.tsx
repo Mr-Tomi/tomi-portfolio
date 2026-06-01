@@ -55,7 +55,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         {/* Hero Image */}
         <div className="w-full rounded-2xl overflow-hidden aspect-[16/9] mb-24 border border-white/10">
           <img 
-            src={project.coverImage} 
+            src={project.heroImage || project.coverImage} 
             alt={project.title}
             className="w-full h-full object-cover"
           />
@@ -99,13 +99,15 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
 
         {/* Inner High-Res Image */}
-        <div className="w-full rounded-2xl overflow-hidden mb-24 border border-white/10">
-          <img 
-            src={project.innerImage} 
-            alt={`${project.title} Details`}
-            className="w-full h-auto object-cover"
-          />
-        </div>
+        {project.innerImage && (
+          <div className="w-full rounded-2xl overflow-hidden mb-24 border border-white/10">
+            <img 
+              src={project.innerImage} 
+              alt={`${project.title} Details`}
+              className="w-full h-auto object-cover"
+            />
+          </div>
+        )}
 
         {/* Next Project Block */}
         <div className="border-t border-white/10 pt-24 text-center">
