@@ -25,7 +25,7 @@ export default function Overlay({ scrollProgress }: { scrollProgress: MotionValu
           Tomi Campbell
         </h1>
         <p className="text-xl md:text-2xl text-gray-300 font-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-          Senior UX/Product Designer | Design Leader
+          Senior UI/UX/Product Designer | Design Leader
         </p>
       </motion.div>
 
