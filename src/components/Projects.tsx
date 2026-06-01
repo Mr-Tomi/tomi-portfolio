@@ -18,7 +18,7 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tight leading-[1.15] mb-8"
+              className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tight leading-[1.35] mb-8"
             >
               Making Complexity<br />Look Easy
             </motion.h2>
