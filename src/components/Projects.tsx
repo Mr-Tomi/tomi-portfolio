@@ -20,17 +20,8 @@ export default function Projects() {
               transition={{ duration: 0.8 }}
               className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tight leading-[0.95] mb-8"
             >
-              Experimental Visual<br />Direction Systems
+              Curated Digital<br />Case Studies
             </motion.h2>
-            <motion.button 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-white text-black text-sm font-medium px-6 py-3 rounded-full flex items-center gap-2 hover:bg-white/90 transition-colors"
-            >
-              Explore Index <Settings size={16} />
-            </motion.button>
           </div>
           <motion.div 
             initial={{ opacity: 0 }}
@@ -39,7 +30,7 @@ export default function Projects() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="max-w-xs mt-12 md:mt-2 text-white/70 text-lg leading-snug font-light"
           >
-            Selected experiments in image direction, layout rhythm, and visual atmosphere for brands that need a sharper digital presence.
+            A handpicked collection of recent projects—ranging from dynamic brand refreshes to intuitive mobile apps and robust web dashboards. Built for impact and seamless user experience.
           </motion.div>
         </div>
 
