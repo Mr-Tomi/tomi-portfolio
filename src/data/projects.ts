@@ -18,7 +18,7 @@ export const projects: Project[] = [
     slug: "moore-africa",
     title: "Moore Africa",
     category: "FINTECH · MOBILE",
-    coverImage: "/images/moore-thumbnail.png",
+    coverImage: "/images/moore-thumbnail-2.png",
     heroImage: "/images/moore-img-1.png",
     overview: "Designing an all-in-one fintech app that makes money management feel simple, rewarding, and personal for young Nigerians.",
     descriptions: [
