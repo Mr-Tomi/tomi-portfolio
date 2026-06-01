@@ -7,7 +7,7 @@ import { Settings } from "lucide-react";
 
 export default function Projects() {
   return (
-    <section id="projects" className="relative z-20 bg-[#EBE9E4] min-h-screen py-24 px-6 md:px-12 lg:px-24 text-[#111]">
+    <section id="projects" className="relative z-20 bg-black min-h-screen py-24 px-6 md:px-12 lg:px-24 text-white">
       <div className="max-w-[1400px] mx-auto">
         
         {/* Header Area */}
@@ -27,7 +27,7 @@ export default function Projects() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-black text-white text-sm font-medium px-6 py-3 rounded-full flex items-center gap-2 hover:bg-black/80 transition-colors"
+              className="bg-white text-black text-sm font-medium px-6 py-3 rounded-full flex items-center gap-2 hover:bg-white/90 transition-colors"
             >
               Explore Index <Settings size={16} />
             </motion.button>
@@ -37,7 +37,7 @@ export default function Projects() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="max-w-xs mt-12 md:mt-2 text-gray-700 text-lg leading-snug font-light"
+            className="max-w-xs mt-12 md:mt-2 text-white/70 text-lg leading-snug font-light"
           >
             Selected experiments in image direction, layout rhythm, and visual atmosphere for brands that need a sharper digital presence.
           </motion.div>
@@ -63,7 +63,7 @@ export default function Projects() {
                 className={`flex flex-col group ${mtClass}`}
               >
                 {/* Image */}
-                <div className={`w-full overflow-hidden rounded-3xl mb-5 bg-gray-200 ${aspectClass}`}>
+                <div className={`w-full overflow-hidden rounded-3xl mb-5 bg-white/5 border border-white/10 ${aspectClass}`}>
                   <img 
                     src={project.coverImage} 
                     alt={project.title}
@@ -72,16 +72,16 @@ export default function Projects() {
                 </div>
                 
                 {/* Content */}
-                <h3 className="text-xl font-semibold tracking-tight mb-2 text-black">
+                <h3 className="text-xl font-semibold tracking-tight mb-2 text-white">
                   {project.title}
                 </h3>
-                <p className="text-gray-500 text-[15px] leading-relaxed mb-5 line-clamp-3 font-light">
+                <p className="text-white/60 text-[15px] leading-relaxed mb-5 line-clamp-3 font-light">
                   {project.overview}
                 </p>
                 
                 <Link 
                   href={`/projects/${project.slug}`} 
-                  className="text-[15px] font-semibold text-black underline underline-offset-[6px] decoration-1 decoration-black/40 hover:decoration-black transition-colors inline-block"
+                  className="text-[15px] font-semibold text-white underline underline-offset-[6px] decoration-1 decoration-white/30 hover:decoration-white transition-colors inline-block"
                 >
                   Open Study
                 </Link>
