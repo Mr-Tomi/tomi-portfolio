@@ -46,9 +46,6 @@ export default function Projects() {
         {/* Grid Area */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
           {projects.map((project, idx) => {
-            // Card 1 has no top margin. Cards 2, 3, 4 are pushed down.
-            const mtClass = idx === 0 ? "mt-0" : "mt-0 lg:mt-16";
-            
             // Alternating aspect ratios: Portrait, Square, Portrait, Square
             const isPortrait = idx % 2 === 0;
             const aspectClass = isPortrait ? "aspect-[4/5]" : "aspect-square";
@@ -60,7 +57,7 @@ export default function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, delay: idx * 0.1 }}
-                className={`flex flex-col group ${mtClass}`}
+                className="flex flex-col group mt-0"
               >
                 {/* Image */}
                 <div className={`w-full overflow-hidden rounded-3xl mb-5 bg-white/5 border border-white/10 ${aspectClass}`}>
