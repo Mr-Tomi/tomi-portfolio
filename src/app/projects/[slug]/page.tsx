@@ -72,7 +72,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {project.descriptions.map((desc, index) => {
               if (desc.startsWith("IMG::")) {
                 return (
-                  <div key={index} className="w-full rounded-2xl overflow-hidden my-8 border border-white/10">
+                  <div key={index} className="w-full rounded-3xl overflow-hidden my-12 border border-white/10 bg-white/5">
                     <img 
                       src={desc.replace("IMG::", "")} 
                       alt={`${project.title} detail`} 
@@ -81,7 +81,19 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   </div>
                 );
               }
-              return <p key={index}>{desc}</p>;
+              if (desc.startsWith("H2::")) {
+                return <h2 key={index} className="text-2xl font-bold text-white mt-16 mb-6">{desc.replace("H2::", "")}</h2>;
+              }
+              if (desc.startsWith("H3::")) {
+                return <h3 key={index} className="text-xl font-semibold text-white/90 mt-10 mb-4">{desc.replace("H3::", "")}</h3>;
+              }
+              if (desc.startsWith("BULLET::")) {
+                return <li key={index} className="ml-6 mb-4 list-disc marker:text-[#FF6B00]" dangerouslySetInnerHTML={{ __html: desc.replace("BULLET::", "") }} />;
+              }
+              if (desc.startsWith("QUOTE::")) {
+                return <blockquote key={index} className="border-l-4 border-[#FF6B00] pl-6 my-10 italic text-white/90 text-xl" dangerouslySetInnerHTML={{ __html: desc.replace("QUOTE::", "") }} />;
+              }
+              return <p key={index} dangerouslySetInnerHTML={{ __html: desc }} className="mb-6" />;
             })}
           </div>
         </div>
