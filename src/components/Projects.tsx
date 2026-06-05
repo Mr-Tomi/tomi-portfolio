@@ -104,7 +104,7 @@ export default function Projects() {
               transition={{ duration: 0.8, delay: idx * 0.1 }}
             >
               <Link href={`/projects/${project.slug}`} className="block group relative rounded-2xl overflow-hidden cursor-pointer border border-white/10 backdrop-blur-sm bg-white/5">
-                <div className="aspect-[4/3] md:aspect-[2.5/1] w-full overflow-hidden">
+                <div className="aspect-[4/3] md:aspect-[16/9] w-full overflow-hidden">
                   <img 
                     src={project.coverImage} 
                     alt={project.title}
