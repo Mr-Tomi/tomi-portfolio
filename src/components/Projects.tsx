@@ -35,23 +35,17 @@ export default function Projects() {
         </div>
 
         {/* Grid Area */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
-          {projects.map((project, idx) => {
-            // Alternating aspect ratios: Portrait, Square, Portrait, Square
-            const isPortrait = idx % 2 === 0;
-            const aspectClass = isPortrait ? "aspect-[4/5]" : "aspect-square";
-
-            return (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, delay: idx * 0.1 }}
-                className="flex flex-col group mt-0"
-              >
-                {/* Image */}
-                <div className={`w-full overflow-hidden rounded-3xl mb-5 bg-white/5 border border-white/10 ${aspectClass}`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+          {projects.map((project, idx) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: idx * 0.1 }}
+            >
+              <Link href={`/projects/${project.slug}`} className="block group relative rounded-2xl overflow-hidden cursor-pointer border border-white/10 backdrop-blur-sm bg-white/5">
+                <div className="aspect-[4/3] w-full overflow-hidden">
                   <img 
                     src={project.coverImage} 
                     alt={project.title}
@@ -59,23 +53,20 @@ export default function Projects() {
                   />
                 </div>
                 
-                {/* Content */}
-                <h3 className="text-xl font-semibold tracking-tight mb-2 text-white">
-                  {project.title}
-                </h3>
-                <p className="text-white/60 text-[15px] leading-relaxed mb-5 line-clamp-3 font-light">
-                  {project.overview}
-                </p>
-                
-                <Link 
-                  href={`/projects/${project.slug}`} 
-                  className="text-[15px] font-semibold text-white underline underline-offset-[6px] decoration-1 decoration-white/30 hover:decoration-white transition-colors inline-block"
-                >
-                  Open Study
-                </Link>
-              </motion.div>
-            );
-          })}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+                  <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    <p className="text-white/70 text-sm font-medium tracking-widest uppercase mb-2">
+                      {project.category}
+                    </p>
+                    <h4 className="text-2xl font-bold text-white drop-shadow-md">
+                      {project.title}
+                    </h4>
+                  </div>
+                </div>
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 group-hover:ring-white/30 transition-all duration-500 pointer-events-none" />
+              </Link>
+            </motion.div>
+          ))}
         </div>
 
       </div>
