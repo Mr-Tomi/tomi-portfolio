@@ -370,7 +370,10 @@ export const projects: Project[] = [
       "H2::The design still stands",
       "The contract was lost, but the design work holds up. Every decision mapped to a real problem surfaced from the spreadsheet and stakeholder conversations. The client validated the thinking in the room. The colour system, the hours visibility, the inline actions, the multi-view architecture: these are sound product decisions that would work in any healthcare scheduling tool.",
       "If I rebuilt Swift Rota tomorrow, the design would be the same. The delivery would be different.",
-      "IMG::/images/swift-rota/img-7a.png"
+      "IMG::/images/swift-rota/img-7a.png",
+      "IMG::/images/swift-rota/img-7b.png",
+      "IMG::/images/swift-rota/img-7c.png",
+      "IMG::/images/swift-rota/img-7d.png"
     ],
     projectType: "Product Design",
     role: "Lead Product Designer"
