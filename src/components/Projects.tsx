@@ -94,7 +94,7 @@ export default function Projects() {
         </div>
 
         {/* Grid Area: Did Not Ship */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 gap-8 lg:gap-12">
           {projects.filter(p => p.group === "did-not-ship").map((project, idx) => (
             <motion.div
               key={project.id}
@@ -104,7 +104,7 @@ export default function Projects() {
               transition={{ duration: 0.8, delay: idx * 0.1 }}
             >
               <Link href={`/projects/${project.slug}`} className="block group relative rounded-2xl overflow-hidden cursor-pointer border border-white/10 backdrop-blur-sm bg-white/5">
-                <div className="aspect-[4/3] w-full overflow-hidden">
+                <div className="aspect-[4/3] md:aspect-[2.5/1] w-full overflow-hidden">
                   <img 
                     src={project.coverImage} 
                     alt={project.title}
