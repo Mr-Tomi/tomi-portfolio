@@ -183,7 +183,7 @@ export const projects: Project[] = [
       "The trade-off: zone-first adds one tap before playback compared to a flat list. I accepted that because the zone screen doubles as a visual map of FRCN's national reach, with institutional credibility on display every time a user opens the stations tab.",
       "H3::Decision 2: Two modes, one app",
       "FRCN could have shipped a radio-only app and a separate news app. Simpler to build, simpler to scope. I argued against splitting because the audience does not separate the two. To a loyal FRCN listener, radio and news are the same institution. Splitting would fragment the experience and force users to maintain two apps. The dual-mode architecture (radio + news in one shell, connected by a persistent player) served the user and the institution.",
-      "H3::Decision 3: Designing for 55-year-old hands, not 25-year-old habits",
+      "H3::Decision 3: Designing for 45+ year-old hands, not 25-year-old habits",
       "Every interaction pattern was pressure-tested against the question: would my parent use this without asking for help? That meant generous touch targets (minimum 48px, often larger), high contrast text on the deep purple background, no swipe-to-reveal gestures (tap only), and clear back navigation on every screen. Accessibility was not a compliance checkbox. It was the design strategy.",
       "IMG::/images/frcn/img-8.png",
       "H2::Final UI",
