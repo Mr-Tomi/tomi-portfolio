@@ -318,7 +318,7 @@ export const projects: Project[] = [
       "H2::The problem",
       "A UK healthcare facility was managing staff shift schedules using a spreadsheet. Rows of names, columns of dates, single-letter codes: D for Day, N for Night, LD for Long Day, SD for Short Day. No visibility into hours worked. No way to request leave digitally. No quick way to spot coverage gaps or overtime risks.",
       "For a facility managing 60+ staff across rotating shift patterns, this spreadsheet was not just inefficient. It was a compliance and patient-safety risk. One misread cell, one forgotten swap, and a ward is understaffed.",
-      "A friend who runs a tech agency in the UK was approached by the facility to build a proper scheduling platform. He brought me in to design it. The catch: we had less than 3 weeks to present a working version to win a GBP 7,000 contract.",
+      "A friend who runs a tech agency in the UK was approached by the facility to build a proper scheduling platform. He brought me in to design it. The catch: we had less than 3 weeks to present a working version to win a GBP 7,000 contract, as the facility had already burned time and budget on a previous agency that failed to deliver.",
       "IMG::/images/swift-rota/img-2.png",
       "H2::Research (in 3 weeks)",
       "Three weeks meant no time for a full discovery phase. I had two sources and I worked them hard.",
