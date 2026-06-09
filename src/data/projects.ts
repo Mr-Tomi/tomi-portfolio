@@ -221,26 +221,7 @@ export const projects: Project[] = [
     role: "Lead Product Designer"
   },
 
-  {
-    id: "2",
-    slug: "flexi-solutions",
-    title: "Flexi Ride",
-    category: "Mobile App Design",
-    coverImage: "https://framerusercontent.com/images/PdXL49MeqKje05fhzgOkIBSvDMw.png",
-    innerImage: "https://framerusercontent.com/images/mwmkdMk2EyUhIkvlKOMksfQ4dU.png",
-    overview: "An intuitive mobile application designed to simplify ride-hailing and logistics.",
-    descriptions: [
-      "The goal was to create a fresh, user-centered ride-hailing experience that prioritizes fairness and flexibility. FlexiRide empowers users to propose their own fares, split ride costs with peers, and manage payments directly within the app,all while maintaining a smooth, intuitive interface.",
-      "This project is about more than just booking a ride; it's about building trust and transparency into urban mobility. I aimed to create a seamless mobile experience that feels both empowering and elegant.",
-      "This project involved the complete UI/UX design of a mobile app MVP, built to disrupt the conventional ride-hailing model. The app introduces dynamic fare proposals and peer-to-peer payment requests, giving users more control over their rides and costs.",
-      "I started by mapping out the end-to-end experience: from fare suggestions and ride requests to cost splitting and transaction tracking. Through collaborative sessions with the client, we honed in on the features users care about most,simplicity, transparency, and speed.",
-      "The final design is clean, intuitive, and flexible across both iOS and Android, ensuring a smooth ride every step of the way.",
-      "The challenge lay in balancing innovation with usability. Dynamic pricing and peer payment aren’t standard in most ride apps, so we needed to guide users clearly through unfamiliar flows.",
-      "We tackled this with well-placed onboarding prompts, contextual tooltips, and intuitive interactions to ensure users felt confident every step of the way."
-    ],
-    projectType: "Mobile App MVP",
-    role: "Lead Designer"
-  },
+
 
   {
     id: "swift-rota",
