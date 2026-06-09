@@ -20,7 +20,7 @@ export default function Projects() {
               transition={{ duration: 0.8 }}
               className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tight leading-[1.35] mb-8"
             >
-              Making Complexity<br />Look Easy
+              Case Studies
             </motion.h2>
           </div>
           <motion.div 
@@ -30,7 +30,7 @@ export default function Projects() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="max-w-xs mt-12 md:mt-2 text-white/70 text-lg leading-relaxed font-light"
           >
-            A handpicked collection of recent projects, ranging from dynamic brand refreshes to intuitive mobile apps and robust web dashboards. Built to solve complex problems through seamless, human-centered user experiences.
+            These case studies show how I think, the trade-offs I make, and the research that drives decisions.
           </motion.div>
         </div>
 
