@@ -20,7 +20,7 @@ export default function Projects() {
               transition={{ duration: 0.8 }}
               className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tight leading-[1.35] mb-8"
             >
-              Case Studies
+              Making Complexity<br />Look Easy
             </motion.h2>
           </div>
           <motion.div 
