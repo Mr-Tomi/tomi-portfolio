@@ -111,7 +111,13 @@ export default function ContactPage() {
 
                 {experiences.map((exp, idx) => (
                   <div key={idx} className="group relative pl-8 md:pl-12 py-2">
-                    <div className="absolute w-3 h-3 bg-white/10 rounded-full -left-[5.5px] top-4 group-hover:bg-white transition-colors z-10" />
+                    <motion.div 
+                      initial={{ backgroundColor: "rgba(255,255,255,0.1)", boxShadow: "0 0 0px rgba(255,255,255,0)" }}
+                      whileInView={{ backgroundColor: "rgba(255,255,255,1)", boxShadow: "0 0 12px rgba(255,255,255,0.8)" }}
+                      viewport={{ once: false, margin: "-45% 0px -45% 0px" }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute w-3 h-3 rounded-full -left-[5.5px] top-4 z-10" 
+                    />
                     <p className="text-white/50 text-sm tracking-widest mb-2">{exp.year}</p>
                     <h3 className="text-2xl font-bold text-white mb-1">{exp.role}</h3>
                     <p className="text-lg text-white/70 font-light">{exp.company}</p>
