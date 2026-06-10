@@ -18,7 +18,7 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tight leading-[1.50] mb-8"
+              className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tight leading-[1.50] mb-4"
             >
               Making Complexity<br />Look Easy
             </motion.h2>
@@ -28,7 +28,7 @@ export default function Projects() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="max-w-xs mt-12 md:mt-2 text-white/70 text-lg leading-relaxed font-light"
+            className="max-w-xs mt-6 md:mt-2 text-white/70 text-lg leading-relaxed font-light"
           >
             These case studies show how I think, the trade-offs I make, and the research that drives decisions.
           </motion.div>
@@ -77,7 +77,7 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tight leading-[1.35] mb-8"
+              className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tight leading-[1.35] mb-4"
             >
               What Didn't<br />Ship
             </motion.h2>
@@ -87,7 +87,7 @@ export default function Projects() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="max-w-xs mt-12 md:mt-2 text-white/70 text-lg leading-relaxed font-light"
+            className="max-w-xs mt-6 md:mt-2 text-white/70 text-lg leading-relaxed font-light"
           >
             The project I learned the most from never made it to production. Here's what went wrong, what I'd do differently, and why the design still holds up.
           </motion.div>
