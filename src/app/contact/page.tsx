@@ -2,8 +2,16 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { useRef } from "react";
+import { motion, useScroll } from "framer-motion";
 
 export default function ContactPage() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
+
   const experiences = [
     {
       role: "Senior UI/UX Designer | UX Consultant (Gen AI) | Founder",
@@ -86,15 +94,24 @@ export default function ContactPage() {
             </section>
 
             {/* Experience Section */}
-            <section>
+            <section ref={containerRef}>
               <p className="text-white/40 tracking-widest uppercase text-sm font-medium mb-12">
                 My journey so far
               </p>
               
-              <div className="space-y-12">
+              <div className="relative space-y-12">
+                {/* The background line */}
+                <div className="absolute left-0 top-2 bottom-0 w-[1px] bg-white/10" />
+                
+                {/* The animated moving line */}
+                <motion.div 
+                  className="absolute left-0 top-2 bottom-0 w-[1px] bg-white origin-top"
+                  style={{ scaleY: scrollYProgress }}
+                />
+
                 {experiences.map((exp, idx) => (
-                  <div key={idx} className="group relative border-l border-white/10 pl-8 md:pl-12 py-2 hover:border-white/50 transition-colors">
-                    <div className="absolute w-3 h-3 bg-white/10 rounded-full -left-[6.5px] top-4 group-hover:bg-white transition-colors" />
+                  <div key={idx} className="group relative pl-8 md:pl-12 py-2">
+                    <div className="absolute w-3 h-3 bg-white/10 rounded-full -left-[5.5px] top-4 group-hover:bg-white transition-colors z-10" />
                     <p className="text-white/50 text-sm tracking-widest mb-2">{exp.year}</p>
                     <h3 className="text-2xl font-bold text-white mb-1">{exp.role}</h3>
                     <p className="text-lg text-white/70 font-light">{exp.company}</p>
