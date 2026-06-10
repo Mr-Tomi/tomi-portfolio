@@ -37,7 +37,7 @@ export default function ContactPage() {
             <div className="sticky top-32 w-full aspect-[3/4] lg:aspect-[4/5] rounded-3xl overflow-hidden border border-white/10">
               {/* Note: The user should place their uploaded portrait at public/images/profile.jpg */}
               <img 
-                src="/images/profile.png" 
+                src="/images/about-me.jpeg" 
                 alt="Tomi Campbell"
                 className="w-full h-full object-cover"
               />
