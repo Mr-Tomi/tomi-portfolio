@@ -118,7 +118,7 @@ export default function Hero() {
       <motion.div
         aria-hidden
         style={{ x: bgMouseX, y: bgMouseY, opacity: bgOpacity }}
-        className="pointer-events-none select-none absolute inset-x-0 top-[27%] md:top-[33%] z-0 flex justify-center gap-[24vw] md:gap-[17vw]"
+        className="pointer-events-none select-none absolute inset-x-0 top-[27%] md:top-[calc(33%+50px)] z-0 flex justify-center gap-[24vw] md:gap-[17vw]"
       >
         <motion.span style={{ x: uxX }} className="block">
           <span
@@ -180,7 +180,7 @@ export default function Hero() {
       {/* ---------- Left sub text (desktop) ---------- */}
       <motion.div
         style={{ x: leftX, y: subY, opacity: subOpacity }}
-        className="hidden md:block absolute z-30 left-[5%] top-[calc(57%+100px)] max-w-[31%]"
+        className="hidden md:block absolute z-30 left-[5%] top-[calc(57%+150px)] max-w-[31%]"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -199,7 +199,7 @@ export default function Hero() {
       {/* ---------- Right sub text (desktop) ---------- */}
       <motion.div
         style={{ x: rightX, y: subY, opacity: subOpacity }}
-        className="hidden md:block absolute z-30 right-[4%] top-[calc(62%+95px)] max-w-[30%] text-right"
+        className="hidden md:block absolute z-30 right-[4%] top-[calc(62%+145px)] max-w-[30%] text-right"
       >
         <motion.p
           initial={{ opacity: 0, y: 30 }}
