@@ -180,7 +180,7 @@ export default function Hero() {
       {/* ---------- Left sub text (desktop) ---------- */}
       <motion.div
         style={{ x: leftX, y: subY, opacity: subOpacity }}
-        className="hidden md:block absolute z-30 left-[5%] top-[calc(57%+5px)] max-w-[31%]"
+        className="hidden md:block absolute z-30 left-[5%] top-[calc(57%+50px)] max-w-[31%]"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -199,7 +199,7 @@ export default function Hero() {
       {/* ---------- Right sub text (desktop) ---------- */}
       <motion.div
         style={{ x: rightX, y: subY, opacity: subOpacity }}
-        className="hidden md:block absolute z-30 right-[4%] top-[62%] max-w-[30%] text-right"
+        className="hidden md:block absolute z-30 right-[4%] top-[calc(62%+45px)] max-w-[30%] text-right"
       >
         <motion.p
           initial={{ opacity: 0, y: 30 }}
