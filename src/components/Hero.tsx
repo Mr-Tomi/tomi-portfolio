@@ -54,9 +54,9 @@ function DashedArrow({
     <svg viewBox="0 0 100 150" className="w-full h-full overflow-visible" fill="none">
       <motion.path
         d={path}
-        stroke="rgba(255,255,255,0.45)"
-        strokeWidth={1.4}
-        strokeDasharray="5 5"
+        stroke="rgba(255,255,255,0.55)"
+        strokeWidth={2.4}
+        strokeDasharray="0.1 7"
         strokeLinecap="round"
         initial={{ pathLength: 0, opacity: 0 }}
         animate={{ pathLength: 1, opacity: 1 }}
@@ -64,8 +64,9 @@ function DashedArrow({
       />
       <motion.path
         d={head}
-        stroke="rgba(255,255,255,0.45)"
-        strokeWidth={1.4}
+        stroke="rgba(255,255,255,0.55)"
+        strokeWidth={2.4}
+        strokeDasharray="0.1 7"
         strokeLinecap="round"
         strokeLinejoin="round"
         initial={{ opacity: 0 }}
@@ -155,7 +156,7 @@ export default function Hero() {
       <motion.div
         aria-hidden
         style={{ x: bgMouseX, y: bgMouseY, opacity: bgOpacity }}
-        className="pointer-events-none select-none absolute inset-x-0 top-[36%] md:top-[33%] z-0 flex justify-center gap-[24vw] md:gap-[17vw]"
+        className="pointer-events-none select-none absolute inset-x-0 top-[27%] md:top-[33%] z-0 flex justify-center gap-[24vw] md:gap-[17vw]"
       >
         <motion.span style={{ x: uxX }} className="block">
           <span
@@ -241,7 +242,7 @@ export default function Hero() {
       {/* ---------- Left sub text (desktop) ---------- */}
       <motion.div
         style={{ x: leftX, y: subY, opacity: subOpacity }}
-        className="hidden md:block absolute z-30 left-[5%] top-[57%] max-w-[31%]"
+        className="hidden md:block absolute z-30 left-[5%] top-[calc(57%+5px)] max-w-[31%]"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -252,8 +253,7 @@ export default function Hero() {
             Senior Product Designer
           </h2>
           <p className="text-white/75 leading-relaxed text-[clamp(0.85rem,1.3vw,1.25rem)] max-w-[28ch]">
-            Senior Product Designer turning complex problems into simple products. Fintech,
-            healthcare and AI.
+            Turning complex problems into simple products. Fintech, B2C, B2B, healthcare and AI.
           </p>
         </motion.div>
       </motion.div>
@@ -270,7 +270,8 @@ export default function Hero() {
           className="text-white/90 leading-relaxed text-[clamp(0.85rem,1.3vw,1.25rem)]"
         >
           6+ years · 6,000+ users on a fintech app
-          <br />I designed · Ex-Superside
+          <br />I designed
+          <br />Ex-Superside
         </motion.p>
       </motion.div>
 
@@ -287,10 +288,11 @@ export default function Hero() {
         >
           <h2 className="text-xl font-semibold tracking-tight">Senior Product Designer</h2>
           <p className="text-white/75 text-sm leading-relaxed">
-            Turning complex problems into simple products. Fintech, healthcare and AI.
+            Turning complex problems into simple products. Fintech, B2C, B2B, healthcare and AI.
           </p>
           <p className="text-white/60 text-xs">
-            6+ years · 6,000+ users on a fintech app I designed · Ex-Superside
+            6+ years · 6,000+ users on a fintech app I designed
+            <br />Ex-Superside
           </p>
         </motion.div>
       </motion.div>
