@@ -40,43 +40,6 @@ function AnimatedHeadline() {
   );
 }
 
-/** Dashed hand-drawn style arrow that draws itself in. */
-function DashedArrow({
-  path,
-  head,
-  delay,
-}: {
-  path: string;
-  head: string;
-  delay: number;
-}) {
-  return (
-    <svg viewBox="0 0 100 150" className="w-full h-full overflow-visible" fill="none">
-      <motion.path
-        d={path}
-        stroke="rgba(255,255,255,0.55)"
-        strokeWidth={2.4}
-        strokeDasharray="0.1 7"
-        strokeLinecap="round"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: 1, opacity: 1 }}
-        transition={{ duration: 1.2, delay, ease: "easeInOut" }}
-      />
-      <motion.path
-        d={head}
-        stroke="rgba(255,255,255,0.55)"
-        strokeWidth={2.4}
-        strokeDasharray="0.1 7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4, delay: delay + 1 }}
-      />
-    </svg>
-  );
-}
-
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -135,7 +98,6 @@ export default function Hero() {
   const rightX = useTransform(progress, [0, 0.5], [0, 120]);
   const subY = useTransform(progress, [0, 0.5], [0, -40]);
   const subOpacity = useTransform(progress, [0, 0.35], [1, 0]);
-  const arrowOpacity = useTransform(progress, [0, 0.25], [1, 0]);
 
   return (
     <section
@@ -182,30 +144,6 @@ export default function Hero() {
         className="absolute inset-x-0 top-[15%] md:top-[max(88px,10%)] z-10 flex justify-center origin-top"
       >
         <AnimatedHeadline />
-      </motion.div>
-
-      {/* ---------- Dashed arrows (desktop) ---------- */}
-      <motion.div
-        aria-hidden
-        style={{ opacity: arrowOpacity }}
-        className="hidden md:block pointer-events-none absolute z-10 left-[19.5%] top-[34%] w-[9vw] aspect-[100/150]"
-      >
-        <DashedArrow
-          path="M96 4 C 50 2, 6 40, 8 140"
-          head="M1 130 L 8 141 L 16 131"
-          delay={1.1}
-        />
-      </motion.div>
-      <motion.div
-        aria-hidden
-        style={{ opacity: arrowOpacity }}
-        className="hidden md:block pointer-events-none absolute z-10 left-[79%] top-[34%] w-[8vw] aspect-[100/150]"
-      >
-        <DashedArrow
-          path="M4 10 C 55 10, 96 55, 90 146"
-          head="M14 1 L 3 10 L 14 19"
-          delay={1.25}
-        />
       </motion.div>
 
       {/* ---------- Portrait ---------- */}
