@@ -1,145 +1,298 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
-import { useEffect, useState, useRef } from "react";
+import {
+  motion,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 import Image from "next/image";
+import { Lexend } from "next/font/google";
+import { useRef } from "react";
+
+const display = Lexend({ subsets: ["latin"], weight: ["400", "500"] });
+
+const HEADLINE = "HI, I’m Tomi";
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/** Headline split into characters that rise in on load. */
+function AnimatedHeadline() {
+  return (
+    <h1
+      aria-label={HEADLINE}
+      className={`${display.className} leading-[0.9] tracking-[-0.02em] font-normal whitespace-nowrap text-[15vw] md:text-[min(14vw,26svh)]`}
+    >
+      {HEADLINE.split("").map((char, i) => (
+        <span key={i} aria-hidden className="inline-block overflow-hidden align-bottom pb-[0.08em]">
+          <motion.span
+            className="inline-block"
+            initial={{ y: "110%" }}
+            animate={{ y: "0%" }}
+            transition={{ duration: 0.9, delay: 0.15 + i * 0.035, ease: EASE }}
+          >
+            {char === " " ? "\u00A0" : char}
+          </motion.span>
+        </span>
+      ))}
+    </h1>
+  );
+}
+
+/** Dashed hand-drawn style arrow that draws itself in. */
+function DashedArrow({
+  path,
+  head,
+  delay,
+}: {
+  path: string;
+  head: string;
+  delay: number;
+}) {
+  return (
+    <svg viewBox="0 0 100 150" className="w-full h-full overflow-visible" fill="none">
+      <motion.path
+        d={path}
+        stroke="rgba(255,255,255,0.45)"
+        strokeWidth={1.4}
+        strokeDasharray="5 5"
+        strokeLinecap="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: 1, opacity: 1 }}
+        transition={{ duration: 1.2, delay, ease: "easeInOut" }}
+      />
+      <motion.path
+        d={head}
+        stroke="rgba(255,255,255,0.45)"
+        strokeWidth={1.4}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: delay + 1 }}
+      />
+    </svg>
+  );
+}
 
 export default function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Mouse movement tracking
+  const sectionRef = useRef<HTMLElement>(null);
+
+  /* ---------------- Cursor parallax (head) ---------------- */
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const spring = { damping: 22, stiffness: 120, mass: 0.6 };
+  const smoothX = useSpring(mouseX, spring);
+  const smoothY = useSpring(mouseY, spring);
 
-  // Smooth springs for mouse movement
-  const springConfig = { damping: 25, stiffness: 150 };
-  const smoothX = useSpring(mouseX, springConfig);
-  const smoothY = useSpring(mouseY, springConfig);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
-    
-    // Normalize mouse coordinates from -1 to 1
-    const x = (clientX / innerWidth) * 2 - 1;
-    const y = (clientY / innerHeight) * 2 - 1;
-    
-    mouseX.set(x);
-    mouseY.set(y);
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(((e.clientX - rect.left) / rect.width) * 2 - 1);
+    mouseY.set(((e.clientY - rect.top) / rect.height) * 2 - 1);
+  };
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
   };
 
-  // Map mouse movement to subtle translations and rotations
-  const headX = useTransform(smoothX, [-1, 1], [-15, 15]);
-  const headY = useTransform(smoothY, [-1, 1], [-15, 15]);
-  const headRotateX = useTransform(smoothY, [-1, 1], [3, -3]);
-  const headRotateY = useTransform(smoothX, [-1, 1], [-3, 3]);
+  const headMouseX = useTransform(smoothX, [-1, 1], [-14, 14]);
+  const headMouseY = useTransform(smoothY, [-1, 1], [-22, 22]);
+  const headRotateX = useTransform(smoothY, [-1, 1], [5, -5]);
+  const headRotateY = useTransform(smoothX, [-1, 1], [-6, 6]);
 
-  // Scroll tracking for parallax and reveal
+  // Background text drifts opposite to the cursor for depth
+  const bgMouseX = useTransform(smoothX, [-1, 1], [10, -10]);
+  const bgMouseY = useTransform(smoothY, [-1, 1], [6, -6]);
+
+  /* ---------------- Scroll effects ---------------- */
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
+    target: sectionRef,
+    offset: ["start start", "end start"],
   });
+  const progress = useSpring(scrollYProgress, { damping: 30, stiffness: 200, mass: 0.4 });
 
-  // Combine mouse parallax with scroll parallax for the head
-  const scrollY = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  
-  // Reveal animations for texts
-  const textY = useTransform(scrollYProgress, [0, 1], [0, 50]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  // Head: sinks + scales slightly on scroll (works on touch devices too)
+  const headScrollY = useTransform(progress, [0, 1], [0, 160]);
+  const headScale = useTransform(progress, [0, 1], [1, 1.08]);
+  const headY = useTransform<number, number>([headMouseY, headScrollY], ([m, s]) => m + s);
+
+  // Headline: lifts, shrinks, blurs and fades
+  const titleY = useTransform(progress, [0, 0.6], [0, -140]);
+  const titleScale = useTransform(progress, [0, 0.6], [1, 0.9]);
+  const titleOpacity = useTransform(progress, [0, 0.45], [1, 0]);
+  const titleBlur = useTransform(progress, [0, 0.45], [0, 10]);
+  const titleFilter = useTransform(titleBlur, (b) => `blur(${b}px)`);
+
+  // UX / AI: split apart horizontally
+  const uxX = useTransform(progress, [0, 0.7], ["0vw", "-14vw"]);
+  const aiX = useTransform(progress, [0, 0.7], ["0vw", "14vw"]);
+  const bgOpacity = useTransform(progress, [0, 0.6], [1, 0]);
+
+  // Sub texts: slide outward + fade
+  const leftX = useTransform(progress, [0, 0.5], [0, -120]);
+  const rightX = useTransform(progress, [0, 0.5], [0, 120]);
+  const subY = useTransform(progress, [0, 0.5], [0, -40]);
+  const subOpacity = useTransform(progress, [0, 0.35], [1, 0]);
+  const arrowOpacity = useTransform(progress, [0, 0.25], [1, 0]);
 
   return (
-    <section 
-      ref={containerRef}
+    <section
+      ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-black text-white perspective-1000"
+      onMouseLeave={handleMouseLeave}
+      aria-label="Introduction"
+      className="relative w-full h-[100svh] min-h-[620px] overflow-hidden bg-black text-white"
+      style={{ perspective: 1200 }}
     >
-      {/* Background Glitch Text */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
-        <h1 className="text-[25vw] md:text-[20vw] font-black tracking-tighter text-white animate-glitch whitespace-nowrap">
-          UX AI
-        </h1>
-      </div>
+      {/* Soft vignette glow behind head */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] md:w-[45vw] md:h-[45vw] rounded-full bg-[radial-gradient(circle,rgba(110,90,255,0.10)_0%,rgba(0,0,0,0)_65%)]"
+      />
 
-      {/* Main Title Text */}
-      <motion.div 
-        style={{ y: textY, opacity: textOpacity }}
-        className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none z-10"
-      >
-        <h2 className="text-7xl md:text-9xl lg:text-[12rem] font-bold tracking-tight mb-20 md:mb-32">
-          HI, I'm Tomi
-        </h2>
-      </motion.div>
-
-      {/* Side Texts & Arrows Container */}
-      <motion.div 
-        style={{ y: textY, opacity: textOpacity }}
-        className="absolute inset-0 z-20 pointer-events-none max-w-7xl mx-auto px-6 flex items-center justify-between"
-      >
-        {/* Left Content */}
-        <div className="w-64 md:w-80 relative mt-40 hidden md:block">
-          <h3 className="text-2xl font-bold mb-2">Senior Product Designer</h3>
-          <p className="text-white/70 text-sm leading-relaxed">
-            Senior Product Designer turning complex problems into simple products. Fintech, healthcare and AI.
-          </p>
-          {/* SVG Arrow Left */}
-          <div className="absolute -top-32 left-full ml-4 w-32 h-32">
-            <svg viewBox="0 0 100 100" className="w-full h-full stroke-white/30 fill-none" style={{ strokeDasharray: "4 4" }}>
-              <path d="M100,10 Q50,10 10,90" strokeWidth="1" />
-              <path d="M10,90 L20,80 M10,90 L25,95" strokeWidth="1" />
-            </svg>
-          </div>
-        </div>
-
-        {/* Right Content */}
-        <div className="w-64 md:w-80 relative mt-40 text-right hidden md:block">
-          <p className="text-white/90 text-sm leading-relaxed">
-            6+ years · 6,000+ users on a fintech app<br/>I designed · Ex-Superside
-          </p>
-          {/* SVG Arrow Right */}
-          <div className="absolute -top-32 right-full mr-4 w-32 h-32">
-            <svg viewBox="0 0 100 100" className="w-full h-full stroke-white/30 fill-none" style={{ strokeDasharray: "4 4" }}>
-              <path d="M0,10 Q50,10 90,90" strokeWidth="1" />
-              <path d="M90,90 L80,80 M90,90 L75,95" strokeWidth="1" />
-            </svg>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Center Portrait Image */}
+      {/* ---------- Background glitch text: UX  AI ---------- */}
       <motion.div
-        style={{ 
-          x: headX, 
-          y: useTransform(() => headY.get() + scrollY.get()), 
-          rotateX: headRotateX, 
-          rotateY: headRotateY 
-        }}
-        className="relative z-30 w-[300px] h-[400px] md:w-[450px] md:h-[600px] pointer-events-auto"
+        aria-hidden
+        style={{ x: bgMouseX, y: bgMouseY, opacity: bgOpacity }}
+        className="pointer-events-none select-none absolute inset-x-0 top-[36%] md:top-[33%] z-0 flex justify-center gap-[24vw] md:gap-[17vw]"
       >
-        <Image
-          src="/images/hero-avatar.png"
-          alt="Tomi Campbell"
-          fill
-          className="object-contain"
-          priority
+        <motion.span style={{ x: uxX }} className="block">
+          <span
+            data-text="UX"
+            className={`${display.className} glitch-text leading-none font-medium text-[24vw] md:text-[min(15vw,28svh)]`}
+          >
+            UX
+          </span>
+        </motion.span>
+        <motion.span style={{ x: aiX }} className="block">
+          <span
+            data-text="AI"
+            className={`${display.className} glitch-text glitch-text--delayed leading-none font-medium text-[24vw] md:text-[min(15vw,28svh)]`}
+          >
+            AI
+          </span>
+        </motion.span>
+      </motion.div>
+
+      {/* ---------- Headline ---------- */}
+      <motion.div
+        style={{ y: titleY, scale: titleScale, opacity: titleOpacity, filter: titleFilter }}
+        className="absolute inset-x-0 top-[15%] md:top-[max(88px,10%)] z-10 flex justify-center origin-top"
+      >
+        <AnimatedHeadline />
+      </motion.div>
+
+      {/* ---------- Dashed arrows (desktop) ---------- */}
+      <motion.div
+        aria-hidden
+        style={{ opacity: arrowOpacity }}
+        className="hidden md:block pointer-events-none absolute z-10 left-[19.5%] top-[34%] w-[9vw] aspect-[100/150]"
+      >
+        <DashedArrow
+          path="M96 4 C 50 2, 6 40, 8 140"
+          head="M1 130 L 8 141 L 16 131"
+          delay={1.1}
+        />
+      </motion.div>
+      <motion.div
+        aria-hidden
+        style={{ opacity: arrowOpacity }}
+        className="hidden md:block pointer-events-none absolute z-10 left-[79%] top-[34%] w-[8vw] aspect-[100/150]"
+      >
+        <DashedArrow
+          path="M4 10 C 55 10, 96 55, 90 146"
+          head="M14 1 L 3 10 L 14 19"
+          delay={1.25}
         />
       </motion.div>
 
-      {/* Mobile Text Content (shown only on small screens) */}
-      <motion.div 
-        style={{ y: textY, opacity: textOpacity }}
-        className="absolute bottom-10 left-0 w-full px-6 flex flex-col gap-6 text-center z-40 md:hidden"
+      {/* ---------- Portrait ---------- */}
+      <div className="absolute z-20 inset-x-0 bottom-[20%] md:bottom-[2%] h-[50%] md:h-[74%] flex justify-center pointer-events-none">
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.1, delay: 0.35, ease: EASE }}
+        className="h-full aspect-[733/1154] pointer-events-auto"
       >
-        <div>
-          <h3 className="text-xl font-bold mb-1">Senior Product Designer</h3>
-          <p className="text-white/70 text-xs">
+        <motion.div
+          style={{
+            x: headMouseX,
+            y: headY as MotionValue<number>,
+            rotateX: headRotateX,
+            rotateY: headRotateY,
+            scale: headScale,
+          }}
+          className="relative w-full h-full will-change-transform"
+        >
+          <Image
+            src="/images/subject-3.png"
+            alt="Portrait of Tomi Campbell, Senior Product Designer"
+            fill
+            priority
+            sizes="(max-width: 768px) 60vw, 40vw"
+            className="object-contain select-none drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+            draggable={false}
+          />
+        </motion.div>
+      </motion.div>
+      </div>
+
+      {/* ---------- Left sub text (desktop) ---------- */}
+      <motion.div
+        style={{ x: leftX, y: subY, opacity: subOpacity }}
+        className="hidden md:block absolute z-30 left-[5%] top-[57%] max-w-[31%]"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.8, ease: EASE }}
+        >
+          <h2 className="font-semibold tracking-tight text-[clamp(1.25rem,2.15vw,2.4rem)] mb-[0.6em] leading-tight">
+            Senior Product Designer
+          </h2>
+          <p className="text-white/75 leading-relaxed text-[clamp(0.85rem,1.3vw,1.25rem)] max-w-[28ch]">
+            Senior Product Designer turning complex problems into simple products. Fintech,
+            healthcare and AI.
+          </p>
+        </motion.div>
+      </motion.div>
+
+      {/* ---------- Right sub text (desktop) ---------- */}
+      <motion.div
+        style={{ x: rightX, y: subY, opacity: subOpacity }}
+        className="hidden md:block absolute z-30 right-[4%] top-[62%] max-w-[30%] text-right"
+      >
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.95, ease: EASE }}
+          className="text-white/90 leading-relaxed text-[clamp(0.85rem,1.3vw,1.25rem)]"
+        >
+          6+ years · 6,000+ users on a fintech app
+          <br />I designed · Ex-Superside
+        </motion.p>
+      </motion.div>
+
+      {/* ---------- Mobile sub texts ---------- */}
+      <motion.div
+        style={{ y: subY, opacity: subOpacity }}
+        className="md:hidden absolute z-30 inset-x-0 bottom-0 px-6 pb-8 pt-16 bg-gradient-to-t from-black via-black/90 to-transparent"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.8, ease: EASE }}
+          className="flex flex-col gap-3 text-center"
+        >
+          <h2 className="text-xl font-semibold tracking-tight">Senior Product Designer</h2>
+          <p className="text-white/75 text-sm leading-relaxed">
             Turning complex problems into simple products. Fintech, healthcare and AI.
           </p>
-        </div>
-        <div>
-          <p className="text-white/90 text-xs">
+          <p className="text-white/60 text-xs">
             6+ years · 6,000+ users on a fintech app I designed · Ex-Superside
           </p>
-        </div>
+        </motion.div>
       </motion.div>
     </section>
   );

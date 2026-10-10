@@ -12,3 +12,76 @@ body {
   background: var(--background);
   overflow-x: hidden;
 }
+
+/* ------------------------------------------------------------------
+   Hero background glitch text ("UX" / "AI")
+   Mostly idle and faint; short RGB-split + slice bursts every few seconds.
+------------------------------------------------------------------- */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.065);
+  animation: glitch-jitter 4.2s steps(1, end) infinite;
+  will-change: transform, opacity;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  clip-path: inset(100% 0 0 0);
+}
+
+.glitch-text::before {
+  color: rgba(255, 70, 110, 0.18);
+  animation: glitch-slice-a 4.2s steps(1, end) infinite;
+}
+
+.glitch-text::after {
+  color: rgba(80, 200, 255, 0.18);
+  animation: glitch-slice-b 4.2s steps(1, end) infinite;
+}
+
+.glitch-text--delayed,
+.glitch-text--delayed::before,
+.glitch-text--delayed::after {
+  animation-delay: -1.9s;
+  animation-duration: 5.3s;
+}
+
+@keyframes glitch-jitter {
+  0%, 86%, 100% { transform: translate(0, 0) skewX(0); opacity: 1; }
+  87% { transform: translate(-3px, 1px) skewX(6deg); opacity: 0.6; }
+  88% { transform: translate(3px, -1px) skewX(-4deg); opacity: 1.4; }
+  89% { transform: translate(-1px, 0) skewX(0); opacity: 0.8; }
+  90% { transform: translate(2px, 1px) skewX(2deg); opacity: 1.2; }
+  91% { transform: translate(0, 0) skewX(0); opacity: 1; }
+}
+
+@keyframes glitch-slice-a {
+  0%, 86%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+  87% { clip-path: inset(12% 0 68% 0); transform: translate(-6px, 0); }
+  88% { clip-path: inset(55% 0 22% 0); transform: translate(5px, 0); }
+  89% { clip-path: inset(30% 0 50% 0); transform: translate(-3px, 0); }
+  90% { clip-path: inset(78% 0 4% 0); transform: translate(4px, 0); }
+  91% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+}
+
+@keyframes glitch-slice-b {
+  0%, 86%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+  87% { clip-path: inset(62% 0 18% 0); transform: translate(6px, 0); }
+  88% { clip-path: inset(8% 0 74% 0); transform: translate(-5px, 0); }
+  89% { clip-path: inset(44% 0 36% 0); transform: translate(3px, 0); }
+  90% { clip-path: inset(20% 0 64% 0); transform: translate(-4px, 0); }
+  91% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch-text,
+  .glitch-text::before,
+  .glitch-text::after {
+    animation: none;
+  }
+}
