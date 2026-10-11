@@ -147,7 +147,7 @@ export default function Hero() {
       </motion.div>
 
       {/* ---------- Portrait ---------- */}
-      <div className="absolute z-20 inset-x-0 bottom-[calc(20%+5px)] md:bottom-[2%] h-[50%] md:h-[74%] flex justify-center pointer-events-none">
+      <div className="absolute z-20 inset-x-0 bottom-[calc(20%+8px)] md:bottom-[2%] h-[50%] md:h-[74%] flex justify-center pointer-events-none">
       <motion.div
         initial={{ opacity: 0, y: 60 }}
         animate={{ opacity: 1, y: 0 }}
@@ -224,7 +224,7 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.8, ease: EASE }}
           className="flex flex-col gap-3 text-center"
         >
-          <h2 className="text-xl font-semibold tracking-tight">Senior Product Designer</h2>
+          <h2 className="text-[22px] font-semibold tracking-tight">Senior Product Designer</h2>
           <p className="text-white/75 text-sm leading-relaxed">
             Turning complex problems into simple products. Fintech, B2C, B2B, healthcare and AI.
           </p>
