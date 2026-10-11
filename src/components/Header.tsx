@@ -56,7 +56,7 @@ export default function Header() {
           title="Tomi Campbell Logo"
         />
       </Link>
-      <nav className="flex space-x-8 text-white text-sm font-medium tracking-wide">
+      <nav className="flex space-x-8 text-white text-[10px] md:text-sm font-medium tracking-wide">
         <Link href="/#projects" className="hover:text-[#FF6B00] transition-colors">Projects</Link>
         <Link href="/contact" className="hover:text-[#FF6B00] transition-colors">About me & Contact</Link>
       </nav>

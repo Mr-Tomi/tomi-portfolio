@@ -147,7 +147,7 @@ export default function Hero() {
       </motion.div>
 
       {/* ---------- Portrait ---------- */}
-      <div className="absolute z-20 inset-x-0 bottom-[20%] md:bottom-[2%] h-[50%] md:h-[74%] flex justify-center pointer-events-none">
+      <div className="absolute z-20 inset-x-0 bottom-[calc(20%+5px)] md:bottom-[2%] h-[50%] md:h-[74%] flex justify-center pointer-events-none">
       <motion.div
         initial={{ opacity: 0, y: 60 }}
         animate={{ opacity: 1, y: 0 }}
