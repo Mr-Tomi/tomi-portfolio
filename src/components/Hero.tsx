@@ -22,7 +22,7 @@ function AnimatedHeadline() {
   return (
     <h1
       aria-label={HEADLINE}
-      className={`${display.className} leading-[0.9] tracking-[-0.02em] font-normal whitespace-nowrap text-[15vw] md:text-[min(14vw,26svh)]`}
+      className={`${display.className} leading-[0.9] tracking-[-0.02em] font-normal whitespace-nowrap text-[15vw] md:text-[length:calc(min(14vw,26svh)+2px)]`}
     >
       {HEADLINE.split("").map((char, i) => (
         <span key={i} aria-hidden className="inline-block overflow-hidden align-bottom pb-[0.08em]">
@@ -120,7 +120,7 @@ export default function Hero() {
         style={{ x: bgMouseX, y: bgMouseY, opacity: bgOpacity }}
         className="pointer-events-none select-none absolute inset-x-0 top-[27%] md:top-[calc(33%+50px)] z-0 flex justify-center gap-[24vw] md:gap-[17vw]"
       >
-        <motion.span style={{ x: uxX }} className="block">
+        <motion.span style={{ x: uxX }} className="block md:relative md:-left-[30px]">
           <span
             data-text="UX"
             className={`${display.className} glitch-text leading-none font-medium text-[24vw] md:text-[min(15vw,28svh)]`}
@@ -128,7 +128,7 @@ export default function Hero() {
             UX
           </span>
         </motion.span>
-        <motion.span style={{ x: aiX }} className="block">
+        <motion.span style={{ x: aiX }} className="block md:relative md:left-[15px]">
           <span
             data-text="AI"
             className={`${display.className} glitch-text glitch-text--delayed leading-none font-medium text-[24vw] md:text-[min(15vw,28svh)]`}
