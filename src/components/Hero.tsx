@@ -208,7 +208,7 @@ export default function Hero() {
           className="text-white/90 leading-relaxed text-[clamp(0.85rem,1.3vw,1.25rem)]"
         >
           6+ years · 6,000+ users on a fintech app
-          <br />I designed
+          <br />I designed.
           <br />Ex-Superside
         </motion.p>
       </motion.div>
@@ -229,7 +229,7 @@ export default function Hero() {
             Turning complex problems into simple products. Fintech, B2C, B2B, healthcare and AI.
           </p>
           <p className="text-white/60 text-xs">
-            6+ years · 6,000+ users on a fintech app I designed
+            6+ years · 6,000+ users on a fintech app I designed.
             <br />Ex-Superside
           </p>
         </motion.div>
