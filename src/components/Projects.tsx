@@ -3,9 +3,18 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { projects } from "@/data/projects";
-import { Settings } from "lucide-react";
+import { useRef, useState } from "react";
+import { Volume2, VolumeX } from "lucide-react";
 
 export default function Projects() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+    videoRef.current.muted = !videoRef.current.muted;
+    setIsMuted(videoRef.current.muted);
+  };
   return (
     <section id="projects" className="relative z-20 bg-black min-h-screen py-24 px-6 md:px-12 lg:px-24 text-white">
       <div className="max-w-[1400px] mx-auto">
@@ -127,6 +136,82 @@ export default function Projects() {
             </motion.div>
           ))}
         </div>
+ 
+        {/* Header Area: Personal Project With Claude Code */}
+        <div id="personal-project" className="flex flex-col md:flex-row justify-between items-start mt-32 mb-20">
+          <div className="max-w-3xl">
+            <motion.h2 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium tracking-tight leading-[1.35] mb-4"
+            >
+              Personal Project<br />With Claude Code
+            </motion.h2>
+          </div>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="max-w-xs mt-6 md:mt-2 text-white/70 text-lg leading-relaxed font-light"
+          >
+            CARIS mobile app — exploring end-to-end product design, interactive prototypes, and AI-assisted development.
+          </motion.div>
+        </div>
+
+        {/* Video Area: Personal Project */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="relative rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 backdrop-blur-sm bg-white/5 shadow-2xl"
+        >
+          <div className="aspect-[4/3] md:aspect-[16/9] w-full overflow-hidden relative bg-black">
+            <video
+              ref={videoRef}
+              src="/videos/caris-mobile-app-teaser.mp4"
+              poster="/images/caris-teaser-poster.jpg"
+              autoPlay
+              loop
+              muted={isMuted}
+              playsInline
+              controls
+              onVolumeChange={(e) => {
+                setIsMuted(e.currentTarget.muted || e.currentTarget.volume === 0);
+              }}
+              className="w-full h-full object-cover"
+            />
+
+            {/* Top Bar Overlay */}
+            <div className="absolute top-4 left-4 right-4 md:top-6 md:left-6 md:right-6 flex justify-between items-center pointer-events-none z-10">
+              <span className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-xs md:text-sm font-medium tracking-wide text-white/90">
+                CARIS · Mobile App Teaser
+              </span>
+
+              <button
+                type="button"
+                onClick={toggleMute}
+                className="pointer-events-auto px-3.5 py-1.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/15 text-xs md:text-sm font-medium text-white transition-all flex items-center gap-2 hover:scale-105 active:scale-95 shadow-lg"
+                aria-label={isMuted ? "Unmute video" : "Mute video"}
+              >
+                {isMuted ? (
+                  <>
+                    <VolumeX className="w-4 h-4 text-white/70" />
+                    <span>Unmute</span>
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="w-4 h-4 text-[#FF6B00]" />
+                    <span>Mute</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </motion.div>
 
       </div>
     </section>
