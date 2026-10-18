@@ -155,9 +155,9 @@ export default function Projects() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="max-w-xs mt-6 md:mt-2 text-white/70 text-lg leading-relaxed font-light"
+            className="max-w-sm mt-6 md:mt-2 text-white/70 text-lg leading-relaxed font-light"
           >
-            CARIS mobile app — exploring end-to-end product design, interactive prototypes, and AI-assisted development.
+            A Nigerian car owner can’t prove what’s been done to their car, so every buyer assumes the worst and prices for it. CARIS is my answer to that; researched, designed, prototyped and shipping, with Claude Code as the build partner.
           </motion.div>
         </div>
 
