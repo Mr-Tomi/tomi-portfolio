@@ -21,14 +21,14 @@ export default function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-3xl"
+            className="w-full md:w-auto shrink-0 max-w-none md:max-w-3xl lg:max-w-4xl"
           >
-            <h1 className="font-serif text-[2.1rem] sm:text-4xl md:text-5xl lg:text-[4rem] xl:text-[4.25rem] leading-[1.12] tracking-tight">
-              <span className="block font-semibold text-white">
+            <h1 className="font-serif text-[clamp(1.2rem,4.8vw,3.75rem)] leading-[1.15] tracking-tight">
+              <span className="block whitespace-nowrap font-semibold text-white">
                 Better experiences{" "}
                 <span className="font-normal text-white/50">for people.</span>
               </span>
-              <span className="block mt-1 font-semibold text-white">
+              <span className="block whitespace-nowrap mt-1 sm:mt-1.5 font-semibold text-white">
                 Better outcomes{" "}
                 <span className="font-normal text-white/50">for business.</span>
               </span>
@@ -97,7 +97,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 35, scale: 0.99 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="relative w-full rounded-2xl sm:rounded-3xl md:rounded-[36px] overflow-hidden border border-white/10 bg-[#161413] shadow-2xl aspect-[4/5] sm:aspect-[1/1.1] md:aspect-[2.35/1] min-h-[460px] md:min-h-[500px] lg:min-h-[560px]"
+          className="relative w-full rounded-2xl sm:rounded-3xl md:rounded-[36px] overflow-hidden border border-white/10 bg-[#161413] shadow-2xl aspect-[4/5] sm:aspect-[1/1.1] md:aspect-[2.53/1] min-h-[460px] md:min-h-[420px] lg:min-h-[500px] xl:min-h-[550px]"
         >
           {/* Portrait Image */}
           <Image
@@ -106,7 +106,7 @@ export default function Hero() {
             fill
             priority
             sizes="(max-width: 768px) 100vw, 1400px"
-            className="object-cover object-[center_16%] md:object-[center_20%] select-none transition-transform duration-700 hover:scale-[1.01]"
+            className="object-cover object-top select-none transition-transform duration-700 hover:scale-[1.01]"
             draggable={false}
           />
 
@@ -129,18 +129,22 @@ export default function Hero() {
           </div>
 
           {/* ----------------------------------------------------
-              DESKTOP CARD OVERLAY (Image 2)
+              DESKTOP CARD OVERLAY (Exact match to reference)
           ---------------------------------------------------- */}
-          <div className="hidden md:flex absolute inset-x-6 lg:inset-x-10 bottom-3 lg:bottom-5 z-20 items-end justify-between gap-4 select-none pointer-events-none">
-            {/* Single-line Outlined Name */}
-            <span className="hero-outline-text font-serif font-bold text-6xl md:text-7xl lg:text-[7.25rem] xl:text-[8.5rem] tracking-tight leading-[0.9]">
-              Tomi Campbell
-            </span>
+          <div className="hidden md:block absolute inset-x-0 bottom-0 z-20 px-6 sm:px-8 md:px-10 lg:px-12 pb-4 lg:pb-5 select-none pointer-events-none">
+            {/* Single-line Outlined Name spanning across card */}
+            <div className="w-full">
+              <h2 className="hero-outline-text font-serif font-bold text-[clamp(3.5rem,8.6vw,8.5rem)] tracking-[-0.01em] leading-[0.88] whitespace-nowrap">
+                Tomi Campbell
+              </h2>
+            </div>
 
-            {/* Bottom-Right: Role Description */}
-            <span className="text-neutral-900 font-sans font-medium text-xs lg:text-sm xl:text-base pb-3 lg:pb-4 whitespace-nowrap">
-              Senior Product Experience Designer
-            </span>
+            {/* Bottom-Right: Role Description positioned directly under Campbell */}
+            <div className="w-full flex justify-end mt-1 lg:mt-1.5">
+              <p className="text-neutral-900 font-sans font-medium text-xs sm:text-sm lg:text-base tracking-normal text-right pr-1">
+                Senior Product Experience Designer
+              </p>
+            </div>
           </div>
         </motion.div>
 
