@@ -8,22 +8,22 @@ export default function Hero() {
   return (
     <section 
       aria-label="Introduction"
-      className="relative w-full bg-black text-white pt-32 sm:pt-36 md:pt-40 lg:pt-44 pb-16 md:pb-24 px-6 md:px-12 lg:px-20"
+      className="relative w-full bg-black text-white pt-28 sm:pt-36 md:pt-40 lg:pt-44 pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20"
     >
       <div className="max-w-[1400px] mx-auto">
         
         {/* ========================================================
             TOP ROW: Headline + Credentials (Bottom Aligned)
         ======================================================== */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 md:gap-8">
-          {/* Main Editorial Headline */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-3.5 sm:gap-4 md:gap-8">
+          {/* Main Editorial Headline: Strictly 2 lines fitting screen width */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="w-full md:w-auto shrink-0 max-w-none md:max-w-3xl lg:max-w-4xl"
           >
-            <h1 className="font-serif text-[clamp(1.2rem,4.8vw,3.75rem)] leading-[1.15] tracking-tight">
+            <h1 className="font-serif text-[clamp(1.3rem,6.3vw,2.25rem)] sm:text-4xl md:text-5xl lg:text-[3.85rem] xl:text-[4.25rem] leading-[1.12] sm:leading-[1.15] tracking-tight">
               <span className="block whitespace-nowrap font-semibold text-white">
                 Better experiences{" "}
                 <span className="font-normal text-white/50">for people.</span>
@@ -35,20 +35,20 @@ export default function Hero() {
             </h1>
           </motion.div>
 
-          {/* Credential / Experience Stats */}
+          {/* Credential / Experience Stats (at least 14px on mobile) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="text-left md:text-right text-xs sm:text-sm text-white/50 leading-relaxed font-light mt-1 md:mt-0 space-y-0.5 pb-0.5 md:pb-1 shrink-0"
+            className="text-left md:text-right text-[14px] sm:text-[15px] md:text-sm text-white/70 leading-relaxed font-normal mt-2 sm:mt-3 md:mt-0 space-y-1 pb-0.5 md:pb-1 shrink-0"
           >
             <p>7+ years · Ex-Superside</p>
             <p>6,000+ users on a fintech app I designed</p>
           </motion.div>
         </div>
 
-        {/* Full-width Horizontal Divider Line */}
-        <div className="w-full h-px bg-white/10 my-6 md:my-7" />
+        {/* Full-width Horizontal Divider Line (clearly visible) */}
+        <div className="w-full h-px bg-white/25 md:bg-white/20 my-6 md:my-7" />
 
         {/* ========================================================
             MIDDLE ROW: Services + Target Audience + CTA
@@ -59,8 +59,8 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-6 md:mb-8"
         >
-          {/* Left Column: Scope / Capabilities */}
-          <div className="flex flex-col space-y-1.5 text-xs sm:text-sm font-semibold tracking-wider text-white/90 uppercase font-sans">
+          {/* Left Column: Scope / Capabilities (larger on mobile, but not as large as headline) */}
+          <div className="flex flex-col space-y-2 sm:space-y-2.5 md:space-y-1.5 text-[17px] sm:text-[18px] md:text-sm font-semibold tracking-wider text-white uppercase font-sans">
             <span>END-TO-END PRODUCT DESIGN</span>
             <span>AI PRODUCT UX</span>
             <span>MVP STRATEGY</span>
@@ -68,23 +68,23 @@ export default function Hero() {
 
           {/* Middle Column: Target Audience */}
           <div className="flex flex-col space-y-1 md:pb-0.5">
-            <span className="text-[11px] font-semibold tracking-widest text-white/40 uppercase font-sans">
+            <span className="text-xs sm:text-xs md:text-[11px] font-semibold tracking-widest text-white/50 uppercase font-sans">
               FOR
             </span>
-            <span className="text-xs sm:text-sm font-semibold tracking-wider text-white/90 uppercase font-sans">
+            <span className="text-[15px] sm:text-[16px] md:text-sm font-semibold tracking-wider text-white/90 uppercase font-sans">
               FOUNDERS &amp; TEAMS BUILDING WHAT’S NEXT
             </span>
           </div>
 
-          {/* Right Column: CTA Button */}
+          {/* Right Column: CTA Button (larger on mobile) */}
           <div className="pt-2 md:pt-0">
             <a
               href="mailto:campbelltomike@gmail.com?subject=Let's%20Talk%20%E2%80%94%20Project%20Inquiry"
-              className="group inline-flex items-center gap-3.5 sm:gap-4 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#CA4306] hover:bg-[#E04B08] active:scale-95 text-white font-bold text-xs sm:text-sm tracking-widest uppercase transition-all duration-300 shadow-[0_0_30px_rgba(202,67,6,0.35)] hover:shadow-[0_0_40px_rgba(224,75,8,0.55)] cursor-pointer"
+              className="group inline-flex items-center gap-4 sm:gap-4.5 px-7 sm:px-8 py-3.5 sm:py-4 md:px-7 md:py-3.5 rounded-full bg-[#E84D1C] hover:bg-[#F05523] active:scale-95 text-white font-bold text-sm sm:text-base md:text-sm tracking-wider uppercase transition-all duration-300 shadow-[0_0_30px_rgba(232,77,28,0.35)] hover:shadow-[0_0_40px_rgba(240,85,35,0.55)] cursor-pointer"
             >
               <span>LET’S TALK</span>
-              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1 shrink-0">
-                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#CA4306]" strokeWidth={2.5} />
+              <span className="w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 rounded-full bg-white flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1 shrink-0">
+                <ArrowRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-4 md:h-4 text-[#E84D1C]" strokeWidth={2.5} />
               </span>
             </a>
           </div>
