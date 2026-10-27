@@ -13,9 +13,9 @@ export default function Hero() {
       <div className="max-w-[1400px] mx-auto">
         
         {/* ========================================================
-            TOP ROW: Headline + Credentials
+            TOP ROW: Headline + Credentials (Bottom Aligned)
         ======================================================== */}
-        <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 md:gap-8">
           {/* Main Editorial Headline */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -40,7 +40,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="text-left md:text-right text-xs sm:text-sm text-white/50 leading-relaxed font-light mt-1 md:mt-2 space-y-0.5"
+            className="text-left md:text-right text-xs sm:text-sm text-white/50 leading-relaxed font-light mt-1 md:mt-0 space-y-0.5 pb-0.5 md:pb-1 shrink-0"
           >
             <p>7+ years · Ex-Superside</p>
             <p>6,000+ users on a fintech app I designed</p>
@@ -48,7 +48,7 @@ export default function Hero() {
         </div>
 
         {/* Full-width Horizontal Divider Line */}
-        <div className="w-full h-px bg-white/10 my-6 md:my-10" />
+        <div className="w-full h-px bg-white/10 my-6 md:my-7" />
 
         {/* ========================================================
             MIDDLE ROW: Services + Target Audience + CTA
@@ -57,7 +57,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-8 md:mb-12"
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-6 md:mb-8"
         >
           {/* Left Column: Scope / Capabilities */}
           <div className="flex flex-col space-y-1.5 text-xs sm:text-sm font-semibold tracking-wider text-white/90 uppercase font-sans">
@@ -131,17 +131,17 @@ export default function Hero() {
           {/* ----------------------------------------------------
               DESKTOP CARD OVERLAY (Exact match to reference)
           ---------------------------------------------------- */}
-          <div className="hidden md:block absolute inset-x-0 bottom-0 z-20 px-6 sm:px-8 md:px-10 lg:px-12 pb-4 lg:pb-5 select-none pointer-events-none">
+          <div className="hidden md:block absolute inset-x-0 bottom-0 z-20 px-5 sm:px-7 md:px-8 lg:px-10 pb-3 md:pb-4 select-none pointer-events-none">
             {/* Single-line Outlined Name spanning across card */}
             <div className="w-full">
-              <h2 className="hero-outline-text font-serif font-bold text-[clamp(3.5rem,8.6vw,8.5rem)] tracking-[-0.01em] leading-[0.88] whitespace-nowrap">
+              <h2 className="hero-outline-text font-serif font-bold text-[clamp(3.5rem,8.75vw,8.75rem)] tracking-[-0.01em] leading-[0.88] whitespace-nowrap">
                 Tomi Campbell
               </h2>
             </div>
 
             {/* Bottom-Right: Role Description positioned directly under Campbell */}
             <div className="w-full flex justify-end mt-1 lg:mt-1.5">
-              <p className="text-neutral-900 font-sans font-medium text-xs sm:text-sm lg:text-base tracking-normal text-right pr-1">
+              <p className="text-[#1A1A1A] font-sans font-medium text-[11px] sm:text-xs md:text-sm lg:text-[15px] tracking-normal text-right pr-1">
                 Senior Product Experience Designer
               </p>
             </div>
