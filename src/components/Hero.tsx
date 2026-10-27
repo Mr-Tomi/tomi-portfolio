@@ -47,8 +47,8 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Divider on Mobile (as seen in mobile mockup) */}
-        <div className="w-full h-px bg-white/10 my-6 md:hidden" />
+        {/* Full-width Horizontal Divider Line */}
+        <div className="w-full h-px bg-white/10 my-6 md:my-10" />
 
         {/* ========================================================
             MIDDLE ROW: Services + Target Audience + CTA
@@ -57,7 +57,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mt-2 md:mt-12 mb-8 md:mb-12"
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-8 md:mb-12"
         >
           {/* Left Column: Scope / Capabilities */}
           <div className="flex flex-col space-y-1.5 text-xs sm:text-sm font-semibold tracking-wider text-white/90 uppercase font-sans">

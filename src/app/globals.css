@@ -22,7 +22,7 @@ body {
   -webkit-text-fill-color: #000000;
   -webkit-text-stroke: 1.75px #ffffff;
   paint-order: stroke fill;
-  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 24px rgba(0, 0, 0, 0.7));
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.05));
 }
 
 @media (min-width: 640px) {
