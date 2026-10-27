@@ -1,239 +1,150 @@
 "use client";
 
-import {
-  motion,
-  useMotionValue,
-  useScroll,
-  useSpring,
-  useTransform,
-  type MotionValue,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { Lexend } from "next/font/google";
-import { useRef } from "react";
-
-const display = Lexend({ subsets: ["latin"], weight: ["400", "500"] });
-
-const HEADLINE = "HI, I’m Tomi";
-const EASE = [0.22, 1, 0.36, 1] as const;
-
-/** Headline split into characters that rise in on load. */
-function AnimatedHeadline() {
-  return (
-    <h1
-      aria-label={HEADLINE}
-      className={`${display.className} leading-[0.9] tracking-[-0.02em] font-normal whitespace-nowrap text-[15vw] md:text-[length:calc(min(14vw,26svh)+2px)]`}
-    >
-      {HEADLINE.split("").map((char, i) => (
-        <span key={i} aria-hidden className="inline-block overflow-hidden align-bottom pb-[0.08em]">
-          <motion.span
-            className="inline-block"
-            initial={{ y: "110%" }}
-            animate={{ y: "0%" }}
-            transition={{ duration: 0.9, delay: 0.15 + i * 0.035, ease: EASE }}
-          >
-            {char === " " ? "\u00A0" : char}
-          </motion.span>
-        </span>
-      ))}
-    </h1>
-  );
-}
+import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  /* ---------------- Cursor parallax (head) ---------------- */
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const spring = { damping: 22, stiffness: 120, mass: 0.6 };
-  const smoothX = useSpring(mouseX, spring);
-  const smoothY = useSpring(mouseY, spring);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    mouseX.set(((e.clientX - rect.left) / rect.width) * 2 - 1);
-    mouseY.set(((e.clientY - rect.top) / rect.height) * 2 - 1);
-  };
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
-  const headMouseX = useTransform(smoothX, [-1, 1], [-14, 14]);
-  const headMouseY = useTransform(smoothY, [-1, 1], [-22, 22]);
-  const headRotateX = useTransform(smoothY, [-1, 1], [5, -5]);
-  const headRotateY = useTransform(smoothX, [-1, 1], [-6, 6]);
-
-  // Background text drifts opposite to the cursor for depth
-  const bgMouseX = useTransform(smoothX, [-1, 1], [10, -10]);
-  const bgMouseY = useTransform(smoothY, [-1, 1], [6, -6]);
-
-  /* ---------------- Scroll effects ---------------- */
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-  const progress = useSpring(scrollYProgress, { damping: 30, stiffness: 200, mass: 0.4 });
-
-  // Head: sinks + scales slightly on scroll (works on touch devices too)
-  const headScrollY = useTransform(progress, [0, 1], [0, 160]);
-  const headScale = useTransform(progress, [0, 1], [1, 1.08]);
-  const headY = useTransform<number, number>([headMouseY, headScrollY], ([m, s]) => m + s);
-
-  // Headline: lifts, shrinks, blurs and fades
-  const titleY = useTransform(progress, [0, 0.6], [0, -140]);
-  const titleScale = useTransform(progress, [0, 0.6], [1, 0.9]);
-  const titleOpacity = useTransform(progress, [0, 0.45], [1, 0]);
-  const titleBlur = useTransform(progress, [0, 0.45], [0, 10]);
-  const titleFilter = useTransform(titleBlur, (b) => `blur(${b}px)`);
-
-  // UX / AI: split apart horizontally
-  const uxX = useTransform(progress, [0, 0.7], ["0vw", "-14vw"]);
-  const aiX = useTransform(progress, [0, 0.7], ["0vw", "14vw"]);
-  const bgOpacity = useTransform(progress, [0, 0.6], [1, 0]);
-
-  // Sub texts: slide outward + fade
-  const leftX = useTransform(progress, [0, 0.5], [0, -120]);
-  const rightX = useTransform(progress, [0, 0.5], [0, 120]);
-  const subY = useTransform(progress, [0, 0.5], [0, -40]);
-  const subOpacity = useTransform(progress, [0, 0.35], [1, 0]);
-
   return (
-    <section
-      ref={sectionRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+    <section 
       aria-label="Introduction"
-      className="relative w-full h-[100svh] min-h-[620px] overflow-hidden bg-black text-white"
-      style={{ perspective: 1200 }}
+      className="relative w-full bg-black text-white pt-32 sm:pt-36 md:pt-40 lg:pt-44 pb-16 md:pb-24 px-6 md:px-12 lg:px-20"
     >
-      {/* Soft vignette glow behind head */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] md:w-[45vw] md:h-[45vw] rounded-full bg-[radial-gradient(circle,rgba(110,90,255,0.10)_0%,rgba(0,0,0,0)_65%)]"
-      />
-
-      {/* ---------- Background glitch text: UX  AI ---------- */}
-      <motion.div
-        aria-hidden
-        style={{ x: bgMouseX, y: bgMouseY, opacity: bgOpacity }}
-        className="pointer-events-none select-none absolute inset-x-0 top-[27%] md:top-[calc(33%+50px)] z-0 flex justify-center gap-[24vw] md:gap-[17vw]"
-      >
-        <motion.span style={{ x: uxX }} className="block md:relative md:-left-[30px]">
-          <span
-            data-text="UX"
-            className={`${display.className} glitch-text leading-none font-medium text-[24vw] md:text-[min(15vw,28svh)]`}
+      <div className="max-w-[1400px] mx-auto">
+        
+        {/* ========================================================
+            TOP ROW: Headline + Credentials
+        ======================================================== */}
+        <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-8">
+          {/* Main Editorial Headline */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-3xl"
           >
-            UX
-          </span>
-        </motion.span>
-        <motion.span style={{ x: aiX }} className="block md:relative md:left-[15px]">
-          <span
-            data-text="AI"
-            className={`${display.className} glitch-text glitch-text--delayed leading-none font-medium text-[24vw] md:text-[min(15vw,28svh)]`}
+            <h1 className="font-serif text-[2.1rem] sm:text-4xl md:text-5xl lg:text-[4rem] xl:text-[4.25rem] leading-[1.12] tracking-tight">
+              <span className="block font-semibold text-white">
+                Better experiences{" "}
+                <span className="font-normal text-white/50">for people.</span>
+              </span>
+              <span className="block mt-1 font-semibold text-white">
+                Better outcomes{" "}
+                <span className="font-normal text-white/50">for business.</span>
+              </span>
+            </h1>
+          </motion.div>
+
+          {/* Credential / Experience Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="text-left md:text-right text-xs sm:text-sm text-white/50 leading-relaxed font-light mt-1 md:mt-2 space-y-0.5"
           >
-            AI
-          </span>
-        </motion.span>
-      </motion.div>
+            <p>7+ years · Ex-Superside</p>
+            <p>6,000+ users on a fintech app I designed</p>
+          </motion.div>
+        </div>
 
-      {/* ---------- Headline ---------- */}
-      <motion.div
-        style={{ y: titleY, scale: titleScale, opacity: titleOpacity, filter: titleFilter }}
-        className="absolute inset-x-0 top-[15%] md:top-[max(88px,10%)] z-10 flex justify-center origin-top"
-      >
-        <AnimatedHeadline />
-      </motion.div>
+        {/* Divider on Mobile (as seen in mobile mockup) */}
+        <div className="w-full h-px bg-white/10 my-6 md:hidden" />
 
-      {/* ---------- Portrait ---------- */}
-      <div className="absolute z-20 inset-x-0 bottom-[calc(20%+8px)] md:bottom-[2%] h-[50%] md:h-[74%] flex justify-center pointer-events-none">
-      <motion.div
-        initial={{ opacity: 0, y: 60 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.1, delay: 0.35, ease: EASE }}
-        className="h-full aspect-[733/1154] pointer-events-auto"
-      >
+        {/* ========================================================
+            MIDDLE ROW: Services + Target Audience + CTA
+        ======================================================== */}
         <motion.div
-          style={{
-            x: headMouseX,
-            y: headY as MotionValue<number>,
-            rotateX: headRotateX,
-            rotateY: headRotateY,
-            scale: headScale,
-          }}
-          className="relative w-full h-full will-change-transform"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mt-2 md:mt-12 mb-8 md:mb-12"
         >
+          {/* Left Column: Scope / Capabilities */}
+          <div className="flex flex-col space-y-1.5 text-xs sm:text-sm font-semibold tracking-wider text-white/90 uppercase font-sans">
+            <span>END-TO-END PRODUCT DESIGN</span>
+            <span>AI PRODUCT UX</span>
+            <span>MVP STRATEGY</span>
+          </div>
+
+          {/* Middle Column: Target Audience */}
+          <div className="flex flex-col space-y-1 md:pb-0.5">
+            <span className="text-[11px] font-semibold tracking-widest text-white/40 uppercase font-sans">
+              FOR
+            </span>
+            <span className="text-xs sm:text-sm font-semibold tracking-wider text-white/90 uppercase font-sans">
+              FOUNDERS &amp; TEAMS BUILDING WHAT’S NEXT
+            </span>
+          </div>
+
+          {/* Right Column: CTA Button */}
+          <div className="pt-2 md:pt-0">
+            <a
+              href="mailto:campbelltomike@gmail.com?subject=Let's%20Talk%20%E2%80%94%20Project%20Inquiry"
+              className="group inline-flex items-center gap-3.5 sm:gap-4 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#CA4306] hover:bg-[#E04B08] active:scale-95 text-white font-bold text-xs sm:text-sm tracking-widest uppercase transition-all duration-300 shadow-[0_0_30px_rgba(202,67,6,0.35)] hover:shadow-[0_0_40px_rgba(224,75,8,0.55)] cursor-pointer"
+            >
+              <span>LET’S TALK</span>
+              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1 shrink-0">
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#CA4306]" strokeWidth={2.5} />
+              </span>
+            </a>
+          </div>
+        </motion.div>
+
+        {/* ========================================================
+            HERO PHOTO CARD: Tomi Campbell Portrait
+        ======================================================== */}
+        <motion.div
+          initial={{ opacity: 0, y: 35, scale: 0.99 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="relative w-full rounded-2xl sm:rounded-3xl md:rounded-[36px] overflow-hidden border border-white/10 bg-[#161413] shadow-2xl aspect-[4/5] sm:aspect-[1/1.1] md:aspect-[2.35/1] min-h-[460px] md:min-h-[500px] lg:min-h-[560px]"
+        >
+          {/* Portrait Image */}
           <Image
-            src="/images/subject-3.png"
-            alt="Portrait of Tomi Campbell, Senior Product Designer"
+            src="/images/new-hero-portfolio.png"
+            alt="Tomi Campbell — Senior Product Experience Designer"
             fill
             priority
-            sizes="(max-width: 768px) 60vw, 40vw"
-            className="object-contain select-none drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+            sizes="(max-width: 768px) 100vw, 1400px"
+            className="object-cover object-[center_16%] md:object-[center_20%] select-none transition-transform duration-700 hover:scale-[1.01]"
             draggable={false}
           />
+
+          {/* ----------------------------------------------------
+              MOBILE CARD OVERLAY (Image 3)
+          ---------------------------------------------------- */}
+          {/* Top-Left: Role Description */}
+          <div className="md:hidden absolute top-5 left-5 sm:top-7 sm:left-7 z-20 text-neutral-900 font-sans font-medium text-xs sm:text-sm leading-snug select-none">
+            Senior Product<br />Experience Designer
+          </div>
+
+          {/* Bottom-Left: Stacked Outlined Name */}
+          <div className="md:hidden absolute bottom-5 left-5 sm:bottom-7 sm:left-7 z-20 flex flex-col leading-[0.88] select-none pointer-events-none">
+            <span className="hero-outline-text font-serif font-bold text-[3.85rem] sm:text-7xl tracking-tight">
+              Tomi
+            </span>
+            <span className="hero-outline-text font-serif font-bold text-[3.85rem] sm:text-7xl tracking-tight">
+              Campbell
+            </span>
+          </div>
+
+          {/* ----------------------------------------------------
+              DESKTOP CARD OVERLAY (Image 2)
+          ---------------------------------------------------- */}
+          <div className="hidden md:flex absolute inset-x-6 lg:inset-x-10 bottom-3 lg:bottom-5 z-20 items-end justify-between gap-4 select-none pointer-events-none">
+            {/* Single-line Outlined Name */}
+            <span className="hero-outline-text font-serif font-bold text-6xl md:text-7xl lg:text-[7.25rem] xl:text-[8.5rem] tracking-tight leading-[0.9]">
+              Tomi Campbell
+            </span>
+
+            {/* Bottom-Right: Role Description */}
+            <span className="text-neutral-900 font-sans font-medium text-xs lg:text-sm xl:text-base pb-3 lg:pb-4 whitespace-nowrap">
+              Senior Product Experience Designer
+            </span>
+          </div>
         </motion.div>
-      </motion.div>
+
       </div>
-
-      {/* ---------- Left sub text (desktop) ---------- */}
-      <motion.div
-        style={{ x: leftX, y: subY, opacity: subOpacity }}
-        className="hidden md:block absolute z-30 left-[5%] top-[calc(57%+150px)] max-w-[31%]"
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.8, ease: EASE }}
-        >
-          <h2 className="font-semibold tracking-tight text-[clamp(1.25rem,2.15vw,2.4rem)] mb-[0.6em] leading-tight">
-            Senior Product Designer
-          </h2>
-          <p className="text-white/75 leading-relaxed text-[clamp(0.85rem,1.3vw,1.25rem)] max-w-[28ch]">
-            Turning complex problems into simple products. Fintech, B2C, B2B, healthcare and AI.
-          </p>
-        </motion.div>
-      </motion.div>
-
-      {/* ---------- Right sub text (desktop) ---------- */}
-      <motion.div
-        style={{ x: rightX, y: subY, opacity: subOpacity }}
-        className="hidden md:block absolute z-30 right-[4%] top-[calc(62%+145px)] max-w-[30%] text-right"
-      >
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.95, ease: EASE }}
-          className="text-white/90 leading-relaxed text-[clamp(0.85rem,1.3vw,1.25rem)]"
-        >
-          6+ years · 6,000+ users on a fintech app
-          <br />I designed.
-          <br />Ex-Superside
-        </motion.p>
-      </motion.div>
-
-      {/* ---------- Mobile sub texts ---------- */}
-      <motion.div
-        style={{ y: subY, opacity: subOpacity }}
-        className="md:hidden absolute z-30 inset-x-0 bottom-0 px-6 pb-8 pt-16 bg-gradient-to-t from-black via-black/90 to-transparent"
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.8, ease: EASE }}
-          className="flex flex-col gap-3 text-center"
-        >
-          <h2 className="text-[22px] font-semibold tracking-tight">Senior Product Designer</h2>
-          <p className="text-white/75 text-sm leading-relaxed">
-            Turning complex problems into simple products. Fintech, B2C, B2B, healthcare and AI.
-          </p>
-          <p className="text-white/60 text-xs">
-            6+ years · 6,000+ users on a fintech app I designed.
-            <br />Ex-Superside
-          </p>
-        </motion.div>
-      </motion.div>
     </section>
   );
 }
