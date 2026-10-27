@@ -15,26 +15,15 @@ body {
 
 /* ------------------------------------------------------------------
    Hero "Tomi Campbell" Outline Typography
-   Black fill with sharp white stroke and subtle drop shadow glow
+   Black fill, cream outline and a soft cream halo. Stroke is in em so
+   it scales with the container-sized name on every breakpoint.
 ------------------------------------------------------------------- */
 .hero-outline-text {
-  color: #000000;
-  -webkit-text-fill-color: #000000;
-  -webkit-text-stroke: 1.75px #ffffff;
+  color: #0a0a0f;
+  -webkit-text-fill-color: #0a0a0f;
+  -webkit-text-stroke: 0.045em #f3ece2;
   paint-order: stroke fill;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.05));
-}
-
-@media (min-width: 640px) {
-  .hero-outline-text {
-    -webkit-text-stroke: 2.25px #ffffff;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero-outline-text {
-    -webkit-text-stroke: 2.75px #ffffff;
-  }
+  filter: drop-shadow(0 0 0.04em rgba(243, 236, 226, 0.85));
 }
 
 /* ------------------------------------------------------------------

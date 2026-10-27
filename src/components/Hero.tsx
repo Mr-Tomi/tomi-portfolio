@@ -97,7 +97,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 35, scale: 0.99 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="relative w-full rounded-2xl sm:rounded-3xl md:rounded-[36px] overflow-hidden border border-white/10 bg-[#161413] shadow-2xl aspect-[4/5] sm:aspect-[1/1.1] md:aspect-[2.53/1] min-h-[460px] md:min-h-[420px] lg:min-h-[500px] xl:min-h-[550px]"
+          className="relative w-full [container-type:inline-size] rounded-2xl sm:rounded-3xl md:rounded-[36px] overflow-hidden border border-white/10 bg-[#161413] shadow-2xl aspect-[4/5] sm:aspect-[1/1.1] md:aspect-[2.53/1] min-h-[460px] md:min-h-[420px] lg:min-h-[500px] xl:min-h-[550px]"
         >
           {/* Portrait Image */}
           <Image
@@ -118,12 +118,12 @@ export default function Hero() {
             Senior Product<br />Experience Designer
           </div>
 
-          {/* Bottom-Left: Stacked Outlined Name */}
-          <div className="md:hidden absolute bottom-5 left-5 sm:bottom-7 sm:left-7 z-20 flex flex-col leading-[0.88] select-none pointer-events-none">
-            <span className="hero-outline-text font-serif font-bold text-[3.85rem] sm:text-7xl tracking-tight">
+          {/* Bottom-Left: Stacked Outlined Name ("Campbell" spans the card width) */}
+          <div className="md:hidden absolute bottom-[5cqw] left-[3.5cqw] z-20 flex flex-col leading-[1.25] select-none pointer-events-none">
+            <span className="hero-outline-text font-display font-extrabold text-[19cqw] tracking-[-0.005em]">
               Tomi
             </span>
-            <span className="hero-outline-text font-serif font-bold text-[3.85rem] sm:text-7xl tracking-tight">
+            <span className="hero-outline-text font-display font-extrabold text-[19cqw] tracking-[-0.005em]">
               Campbell
             </span>
           </div>
@@ -131,20 +131,16 @@ export default function Hero() {
           {/* ----------------------------------------------------
               DESKTOP CARD OVERLAY (Exact match to reference)
           ---------------------------------------------------- */}
-          <div className="hidden md:block absolute inset-x-0 bottom-0 z-20 px-5 sm:px-7 md:px-8 lg:px-10 pb-3 md:pb-4 select-none pointer-events-none">
-            {/* Single-line Outlined Name spanning across card */}
-            <div className="w-full">
-              <h2 className="hero-outline-text font-serif font-bold text-[clamp(3.5rem,8.75vw,8.75rem)] tracking-[-0.01em] leading-[0.88] whitespace-nowrap">
-                Tomi Campbell
-              </h2>
-            </div>
+          <div className="hidden md:block absolute inset-x-0 bottom-[2cqw] z-20 px-[2cqw] select-none pointer-events-none">
+            {/* Single-line Outlined Name spanning the full card width */}
+            <h2 className="hero-outline-text font-display font-extrabold text-[12.1cqw] tracking-[-0.005em] leading-[1] whitespace-nowrap">
+              Tomi Campbell
+            </h2>
 
-            {/* Bottom-Right: Role Description positioned directly under Campbell */}
-            <div className="w-full flex justify-end mt-1 lg:mt-1.5">
-              <p className="text-[#1A1A1A] font-sans font-medium text-[11px] sm:text-xs md:text-sm lg:text-[15px] tracking-normal text-right pr-1">
-                Senior Product Experience Designer
-              </p>
-            </div>
+            {/* Bottom-Right: Role Description tucked under the end of Campbell */}
+            <p className="-mt-[0.6cqw] pr-[0.6cqw] text-right text-[#1A1A1A] font-sans font-medium text-[1.15cqw] tracking-normal">
+              Senior Product Experience Designer
+            </p>
           </div>
         </motion.div>
 

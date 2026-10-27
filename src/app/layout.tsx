@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Noto_Serif_Display, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -7,6 +7,11 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
   weight: ["400", "500", "600", "700", "800", "900"],
+});
+const notoSerifDisplay = Noto_Serif_Display({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["800"],
 });
 
 export const metadata: Metadata = {
@@ -24,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased bg-black text-white`}>
+      <body className={`${inter.variable} ${playfair.variable} ${notoSerifDisplay.variable} font-sans antialiased bg-black text-white`}>
         {/* Navigation Header */}
         <Header />
 
