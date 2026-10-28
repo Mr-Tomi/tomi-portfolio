@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <section 
       aria-label="Introduction"
-      className="relative w-full bg-black text-white pt-28 sm:pt-36 md:pt-40 lg:pt-44 pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20"
+      className="relative w-full bg-black text-white pt-[84px] sm:pt-[100px] md:pt-[108px] lg:pt-[116px] pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20"
     >
       <div className="max-w-[1400px] mx-auto">
         
