@@ -14,16 +14,19 @@ export default function Hero() {
         
         {/* ========================================================
             TOP ROW: Headline + Credentials (Bottom Aligned)
+            Side by side only from 1440px, where both fit on one line;
+            below that the credentials stack under the headline.
         ======================================================== */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-3.5 sm:gap-4 md:gap-8">
-          {/* Main Editorial Headline: Strictly 2 lines fitting screen width */}
+        <div className="flex flex-col min-[1440px]:flex-row justify-between items-start min-[1440px]:items-end gap-3.5 sm:gap-4 min-[1440px]:gap-8">
+          {/* Main Editorial Headline: 2 lines. When stacked, sized to the
+              container so the longer line runs edge to edge (capped). */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full md:w-auto shrink-0 max-w-none md:max-w-3xl lg:max-w-4xl"
+            className="w-full min-[1440px]:w-auto shrink-0 max-[1439px]:[container-type:inline-size]"
           >
-            <h1 className="font-serif text-[clamp(1.3rem,6.3vw,2.25rem)] sm:text-4xl md:text-5xl lg:text-[3.85rem] xl:text-[4.25rem] leading-[1.12] sm:leading-[1.15] tracking-tight">
+            <h1 className="font-serif text-[min(7.8cqw,4.75rem)] min-[1440px]:text-[4.75rem] leading-[1.12] sm:leading-[1.15] tracking-tight">
               <span className="block whitespace-nowrap font-semibold text-white">
                 Better experiences{" "}
                 <span className="font-normal text-white/50">for people.</span>
@@ -40,9 +43,9 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="text-left md:text-right text-[14px] sm:text-[15px] md:text-sm text-white/70 leading-relaxed font-normal mt-2 sm:mt-3 md:mt-0 space-y-1 pb-0.5 md:pb-1 shrink-0"
+            className="text-left min-[1440px]:text-right text-[14px] sm:text-[15px] text-white/70 leading-relaxed font-normal mt-2 sm:mt-3 min-[1440px]:mt-0 space-y-1 pb-0.5 min-[1440px]:pb-1 shrink-0"
           >
-            <p>7+ years · Ex-Superside</p>
+            <p>6+ years · Ex-Superside</p>
             <p>6,000+ users on a fintech app I designed</p>
           </motion.div>
         </div>
@@ -132,15 +135,18 @@ export default function Hero() {
               DESKTOP CARD OVERLAY (Exact match to reference)
           ---------------------------------------------------- */}
           <div className="hidden md:block absolute inset-x-0 bottom-[2cqw] z-20 px-[2cqw] select-none pointer-events-none">
-            {/* Single-line Outlined Name spanning the full card width */}
-            <h2 className="hero-outline-text font-display font-extrabold text-[12.1cqw] tracking-[-0.005em] leading-[1] whitespace-nowrap">
-              Tomi Campbell
-            </h2>
-
-            {/* Bottom-Right: Role Description tucked under the end of Campbell */}
-            <p className="-mt-[0.6cqw] pr-[0.6cqw] text-right text-[#1A1A1A] font-sans font-medium text-[1.15cqw] tracking-normal">
-              Senior Product Experience Designer
-            </p>
+            {/* Shrink-wrapped to the name so the role's right edge lines up with the final "l" */}
+            <div className="w-fit">
+              {/* Single-line Outlined Name spanning the full card width */}
+              <h2 className="hero-outline-text font-display font-extrabold text-[12.1cqw] tracking-[-0.005em] leading-[1] whitespace-nowrap">
+                Tomi Campbell
+              </h2>
+  
+              {/* Bottom-Right: Role Description, right edge aligned with the final "l" */}
+              <p className="-mt-[0.6cqw] text-right text-[#1A1A1A] font-sans font-medium text-[1.15cqw] tracking-normal">
+                Senior Product Experience Designer
+              </p>
+            </div>
           </div>
         </motion.div>
 
