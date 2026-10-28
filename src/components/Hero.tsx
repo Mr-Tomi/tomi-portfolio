@@ -3,8 +3,106 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useRef, type RefObject } from "react";
+
+/* ------------------------------------------------------------------
+   Hover wave for the desktop name + role: letters near the cursor
+   lift and swell with a Gaussian falloff, easing back when it leaves.
+------------------------------------------------------------------- */
+function WaveLetters({ text }: { text: string }) {
+  return (
+    <>
+      {Array.from(text).map((ch, i) => (
+        <span
+          key={i}
+          data-wave
+          aria-hidden="true"
+          className="inline-block origin-bottom will-change-transform"
+        >
+          {ch === " " ? " " : ch}
+        </span>
+      ))}
+    </>
+  );
+}
+
+type WaveGroup = {
+  ref: RefObject<HTMLElement | null>;
+  lift: number; // em the closest letter rises
+  scale: number; // extra scale for the closest letter
+  reach: number; // falloff radius, in multiples of the font size
+  tint?: [number, number, number, number, number, number]; // rgb from -> to
+};
+
+function useHoverWave(cardRef: RefObject<HTMLElement | null>, groups: WaveGroup[]) {
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+    const mq = window.matchMedia("(min-width: 768px) and (hover: hover) and (prefers-reduced-motion: no-preference)");
+    if (!mq.matches) return;
+
+    const sets = groups.map((g) => ({
+      g,
+      letters: Array.from(g.ref.current?.querySelectorAll<HTMLElement>("[data-wave]") ?? []),
+      cur: [] as number[],
+    }));
+    let mouse: { x: number; y: number } | null = null;
+    let raf = 0;
+
+    const tick = () => {
+      let active = mouse !== null;
+      for (const s of sets) {
+        const fs = parseFloat(getComputedStyle(s.g.ref.current!).fontSize);
+        const sigma = fs * s.g.reach;
+        s.letters.forEach((el, i) => {
+          let target = 0;
+          if (mouse) {
+            // offsetLeft/Top ignore our own transforms, so the wave never feeds back on itself
+            const parent = el.offsetParent as HTMLElement | null;
+            const pr = parent?.getBoundingClientRect();
+            const cx = (pr?.left ?? 0) + el.offsetLeft + el.offsetWidth / 2;
+            const cy = (pr?.top ?? 0) + el.offsetTop + el.offsetHeight / 2;
+            const d2 = (mouse.x - cx) ** 2 + ((mouse.y - cy) * 0.6) ** 2;
+            target = Math.exp(-d2 / (2 * sigma * sigma));
+          }
+          let c = (s.cur[i] ?? 0) + (target - (s.cur[i] ?? 0)) * 0.14;
+          if (Math.abs(c - target) < 0.002) c = target; // settle exactly, so nothing is left a hair off
+          s.cur[i] = c;
+          if (c !== target) active = true;
+          el.style.transform = c > 0 ? `translateY(${-c * s.g.lift}em) scale(${1 + c * s.g.scale})` : "";
+          if (s.g.tint) {
+            const [r1, g1, b1, r2, g2, b2] = s.g.tint;
+            el.style.color = c > 0 ? `rgb(${r1 + (r2 - r1) * c}, ${g1 + (g2 - g1) * c}, ${b1 + (b2 - b1) * c})` : "";
+          }
+        });
+      }
+      raf = active ? requestAnimationFrame(tick) : 0;
+    };
+    const start = () => { if (!raf) raf = requestAnimationFrame(tick); };
+    const onMove = (e: PointerEvent) => { mouse = { x: e.clientX, y: e.clientY }; start(); };
+    const onLeave = () => { mouse = null; start(); };
+
+    card.addEventListener("pointermove", onMove);
+    card.addEventListener("pointerleave", onLeave);
+    return () => {
+      card.removeEventListener("pointermove", onMove);
+      card.removeEventListener("pointerleave", onLeave);
+      cancelAnimationFrame(raf);
+    };
+    // groups is a static config defined in the component body
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cardRef]);
+}
 
 export default function Hero() {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const roleRef = useRef<HTMLParagraphElement>(null);
+  useHoverWave(cardRef, [
+    { ref: nameRef, lift: 0.1, scale: 0.08, reach: 0.55 },
+    { ref: roleRef, lift: 0.45, scale: 0.12, reach: 2.2, tint: [26, 26, 26, 232, 77, 28] },
+  ]);
+
   return (
     <section 
       aria-label="Introduction"
@@ -97,6 +195,7 @@ export default function Hero() {
             HERO PHOTO CARD: Tomi Campbell Portrait
         ======================================================== */}
         <motion.div
+          ref={cardRef}
           initial={{ opacity: 0, y: 35, scale: 0.99 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
@@ -138,13 +237,21 @@ export default function Hero() {
             {/* Shrink-wrapped to the name so the role's right edge lines up with the final "l" */}
             <div className="w-fit">
               {/* Single-line Outlined Name spanning the full card width */}
-              <h2 className="hero-outline-text font-display font-extrabold text-[12.1cqw] tracking-[-0.005em] leading-[1] whitespace-nowrap">
-                Tomi Campbell
+              <h2
+                ref={nameRef}
+                aria-label="Tomi Campbell"
+                className="hero-outline-text font-display font-extrabold text-[12.1cqw] tracking-[-0.005em] leading-[1] whitespace-nowrap"
+              >
+                <WaveLetters text="Tomi Campbell" />
               </h2>
-  
+
               {/* Bottom-Right: Role Description, right edge aligned with the final "l" */}
-              <p className="-mt-[0.6cqw] text-right text-[#1A1A1A] font-sans font-medium text-[1.15cqw] tracking-normal">
-                Senior Product Experience Designer
+              <p
+                ref={roleRef}
+                aria-label="Senior Product Experience Designer"
+                className="-mt-[0.6cqw] text-right text-[#1A1A1A] font-sans font-medium text-[1.15cqw] tracking-normal whitespace-nowrap"
+              >
+                <WaveLetters text="Senior Product Experience Designer" />
               </p>
             </div>
           </div>
