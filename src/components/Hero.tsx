@@ -51,7 +51,7 @@ export default function Hero() {
         </div>
 
         {/* Full-width Horizontal Divider Line (clearly visible) */}
-        <div className="w-full h-px bg-white/25 md:bg-white/20 my-6 md:my-7" />
+        <div className="w-full h-px bg-white/15 md:bg-white/10 my-6 md:my-7" />
 
         {/* ========================================================
             MIDDLE ROW: Services + Target Audience + CTA
