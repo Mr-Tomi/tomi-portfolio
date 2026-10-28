@@ -63,7 +63,7 @@ export default function Hero() {
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-6 md:mb-8"
         >
           {/* Left Column: Scope / Capabilities (larger on mobile, but not as large as headline) */}
-          <div className="flex flex-col space-y-2 sm:space-y-2.5 md:space-y-1.5 text-[17px] sm:text-[18px] md:text-sm font-semibold tracking-wider text-white/70 uppercase font-sans">
+          <div className="flex flex-col space-y-2 sm:space-y-2.5 md:space-y-1.5 text-[17px] sm:text-[18px] md:text-sm font-semibold tracking-wider text-white/60 uppercase font-sans">
             <span>END-TO-END PRODUCT DESIGN</span>
             <span>AI PRODUCT UX</span>
             <span>MVP STRATEGY</span>
@@ -74,7 +74,7 @@ export default function Hero() {
             <span className="text-xs sm:text-xs md:text-[11px] font-semibold tracking-widest text-white/50 uppercase font-sans">
               FOR
             </span>
-            <span className="text-[15px] sm:text-[16px] md:text-sm font-semibold tracking-wider text-white/70 uppercase font-sans">
+            <span className="text-[15px] sm:text-[16px] md:text-sm font-semibold tracking-wider text-white/60 uppercase font-sans">
               FOUNDERS &amp; TEAMS BUILDING WHAT’S NEXT
             </span>
           </div>
