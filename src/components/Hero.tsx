@@ -100,7 +100,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 35, scale: 0.99 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="relative w-full [container-type:inline-size] rounded-2xl sm:rounded-3xl md:rounded-[36px] overflow-hidden border border-white/10 bg-[#161413] shadow-2xl aspect-[4/5] sm:aspect-[1/1.1] md:aspect-[2.53/1] min-h-[460px] md:min-h-[420px] lg:min-h-[500px] xl:min-h-[550px]"
+          className="relative w-full [container-type:inline-size] rounded-2xl sm:rounded-3xl md:rounded-[36px] overflow-hidden border border-white/10 bg-[#161413] shadow-2xl aspect-[4/5] sm:aspect-[1/1.1] md:aspect-[2.04/1] min-h-[460px] md:min-h-[420px] lg:min-h-[500px] xl:min-h-[550px]"
         >
           {/* Portrait Image */}
           <Image
