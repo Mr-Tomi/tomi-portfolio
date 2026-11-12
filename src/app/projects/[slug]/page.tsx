@@ -1,7 +1,18 @@
 import { projects } from "@/data/projects";
+import { imageSizes } from "@/data/imageSizes";
+import Image from "next/image";
+import LazyVideo from "@/components/LazyVideo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+
+// Pre-render every case study at build time so clicking a project opens a static page instantly.
+export function generateStaticParams() {
+  return projects.map((p) => ({ slug: p.slug }));
+}
+export const dynamicParams = false;
+
+const sizeOf = (src: string): [number, number] => imageSizes[src] ?? [1600, 1200];
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -53,11 +64,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
 
         {/* Hero Image */}
-        <div className="w-full rounded-2xl overflow-hidden aspect-[16/9] mb-24 border border-white/10">
-          <img 
-            src={project.heroImage || project.coverImage} 
+        <div className="relative w-full rounded-2xl overflow-hidden aspect-[16/9] mb-24 border border-white/10">
+          <Image
+            src={project.heroImage || project.coverImage}
             alt={project.title}
-            className="w-full h-full object-cover"
+            fill
+            priority
+            sizes="(min-width: 1280px) 1088px, 100vw"
+            className="object-cover"
           />
         </div>
 
@@ -71,12 +85,25 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <div className="md:col-span-8 space-y-8 text-white/70 text-lg leading-relaxed font-light">
             {project.descriptions.map((desc, index) => {
               if (desc.startsWith("IMG::")) {
+                const src = desc.replace("IMG::", "");
+                const [w, h] = sizeOf(src);
+                if (src.endsWith(".mp4")) {
+                  // Animated demos ship as looping muted video: a fraction of a GIF's size
+                  return (
+                    <div key={index} className="w-full rounded-3xl overflow-hidden my-12 border border-white/10 bg-white/5" style={{ aspectRatio: `${w} / ${h}` }}>
+                      <LazyVideo src={src} label={`${project.title} detail`} className="block w-full h-full" />
+                    </div>
+                  );
+                }
                 return (
                   <div key={index} className="w-full rounded-3xl overflow-hidden my-12 border border-white/10 bg-white/5">
-                    <img 
-                      src={desc.replace("IMG::", "")} 
-                      alt={`${project.title} detail`} 
-                      className="w-full h-auto object-cover" 
+                    <Image
+                      src={src}
+                      alt={`${project.title} detail`}
+                      width={w}
+                      height={h}
+                      sizes="(min-width: 1280px) 704px, (min-width: 768px) 62vw, 100vw"
+                      className="w-full h-auto object-cover"
                     />
                   </div>
                 );
@@ -101,9 +128,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         {/* Inner High-Res Image */}
         {project.innerImage && (
           <div className="w-full rounded-2xl overflow-hidden mb-24 border border-white/10">
-            <img 
-              src={project.innerImage} 
+            <Image
+              src={project.innerImage}
               alt={`${project.title} Details`}
+              width={sizeOf(project.innerImage)[0]}
+              height={sizeOf(project.innerImage)[1]}
+              sizes="(min-width: 1280px) 1088px, 100vw"
               className="w-full h-auto object-cover"
             />
           </div>

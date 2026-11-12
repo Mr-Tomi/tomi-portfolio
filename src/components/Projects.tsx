@@ -1,14 +1,34 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/data/projects";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 
 export default function Projects() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
+
+  // The teaser is the heaviest file on the page: fetch and play it only once it nears the viewport
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (video.preload !== "auto") { video.preload = "auto"; video.load(); }
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { rootMargin: "200px 0px" }
+    );
+    io.observe(video);
+    return () => io.disconnect();
+  }, []);
 
   const toggleMute = () => {
     if (!videoRef.current) return;
@@ -54,11 +74,13 @@ export default function Projects() {
               transition={{ duration: 0.8, delay: idx * 0.1 }}
             >
               <Link href={`/projects/${project.slug}`} className="block group relative rounded-2xl overflow-hidden cursor-pointer border border-white/10 backdrop-blur-sm bg-white/5">
-                <div className="aspect-[4/3] w-full overflow-hidden">
-                  <img 
-                    src={project.coverImage} 
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <Image
+                    src={project.coverImage}
                     alt={project.title}
-                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+                    fill
+                    sizes="(min-width: 1400px) 650px, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 
@@ -113,11 +135,13 @@ export default function Projects() {
               transition={{ duration: 0.8, delay: idx * 0.1 }}
             >
               <Link href={`/projects/${project.slug}`} className="block group relative rounded-2xl overflow-hidden cursor-pointer border border-white/10 backdrop-blur-sm bg-white/5">
-                <div className="aspect-[4/3] md:aspect-[16/9] w-full overflow-hidden">
-                  <img 
-                    src={project.coverImage} 
+                <div className="relative aspect-[4/3] md:aspect-[16/9] w-full overflow-hidden">
+                  <Image
+                    src={project.coverImage}
                     alt={project.title}
-                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+                    fill
+                    sizes="(min-width: 1400px) 1300px, 100vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 
@@ -174,7 +198,7 @@ export default function Projects() {
               ref={videoRef}
               src="/videos/caris-mobile-app-teaser.mp4"
               poster="/images/caris-teaser-poster.jpg"
-              autoPlay
+              preload="none"
               loop
               muted={isMuted}
               playsInline

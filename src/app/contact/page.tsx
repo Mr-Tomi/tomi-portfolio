@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useRef } from "react";
@@ -44,10 +45,13 @@ export default function ContactPage() {
           <div className="relative">
             <div className="sticky top-32 w-full aspect-[3/4] lg:aspect-[4/5] rounded-3xl overflow-hidden border border-white/10">
               {/* Note: The user should place their uploaded portrait at public/images/profile.jpg */}
-              <img 
-                src="/images/tomi-tech-dp.jpg" 
+              <Image
+                src="/images/tomi-tech-dp.jpg"
                 alt="Tomi Campbell"
-                className="w-full h-full object-cover"
+                fill
+                priority
+                sizes="(min-width: 1280px) 560px, (min-width: 1024px) 45vw, 100vw"
+                className="object-cover"
               />
             </div>
           </div>
